@@ -1,4 +1,5 @@
 This week: Ch1 - Arrays and Strings
+
 Questions: 1.1, 1.2, 1.4
 
 1.1 - Is Unique
