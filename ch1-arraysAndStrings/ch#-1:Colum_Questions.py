@@ -12,11 +12,11 @@ A palindrome is a word or phrase that is the same forwards and backwards.
 A permutation is a rearrangement of letters. The palindrome does not need to be limited to just dictionary words.
 
 """
+#Question 1.1 - Is Unique
+#Question 1.2 - Check Permutation
 
-
-#Question 1.4
+#Question 1.4 - Palindrome Permutation
 def IsPalindrome ( S ) :
-    #Does the sequence 'S' read the same forewards and backwards?
     start = 0
     end = len ( S ) -1
     while start < end :
