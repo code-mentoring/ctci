@@ -1,7 +1,6 @@
 #Question 1.4
 def IsPalindrome ( S ) :
     #Does the sequence 'S' read the same forewards and backwards?
-    S = "" 
     start = 0
     end = len ( S ) -1
     while start < end :
