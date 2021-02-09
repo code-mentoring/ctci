@@ -25,4 +25,4 @@ It's good practice anyway when working on forked repos.
 * Then update your remote fork:
   * git push
 
-[More info about GitHub Forking](https://gist.github.com/Chaser324/ce0505fbed06b947d962){:target="_blank"}
+[More info about GitHub Forking](https://gist.github.com/Chaser324/ce0505fbed06b947d962)
