@@ -49,12 +49,12 @@ const isUniqueNoDS = (str) => {
 
 //tests
 const testStrings = [
-  "a",
-  "helloworld",
-  "heloword1122",
-  "abcdef1234",
-  "  abcdef1234  ",
-  "  _abcdef1234__  ",
+  "a", //true
+  "helloworld", //false
+  "heloword1122", //false
+  "abcdef1234", //true
+  "  abcdef1234  ", //true
+  "  _abcdef1234__  ", //false
 ];
 
 console.log("Testing below strings with isUnique method");
