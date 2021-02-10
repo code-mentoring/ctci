@@ -1,23 +1,9 @@
-"""
-1.1 - Is Unique
-Implement an algorithm to determine if a string has all unique characters. 
-What if you cannot use additional data structures?
-
-1.2 - Check Permutation
-Given two strings, write a method to decide if one is a permutation of the other.
-
-1.4 - Palindrome Permutation
-Given a string, write a function to check if it is a permutation of a palindrome. 
-A palindrome is a word or phrase that is the same forwards and backwards. 
-A permutation is a rearrangement of letters. The palindrome does not need to be limited to just dictionary words.
-
-"""
 # Question 1.1 - Is Unique
 
 
-def IsUnique(S):
-    for i in range(len(S)):
-        for j in range(i + 1, len(S)):
+def IsUnique( S ):
+    for i in range(len( S )):
+        for j in range(i + 1, len( S )):
             if(S[i] == S[j]):
                 return False
     return True
@@ -26,11 +12,11 @@ def IsUnique(S):
 
 
 def IsPermutation( S1, S2 ):
-    LenS1 = len( S1)
+    LenS1 = len( S1 )
     LenS2 = len( S2 )
     if (LenS1 != LenS2 ):
         return False
-    SorS1 = sorted( S1)
+    SorS1 = sorted( S1 )
     S1 = " ".join( SorS1 )
     SorS2 = sorted( S2 )
     S2 = " ".join( SorS2 )
@@ -42,9 +28,9 @@ def IsPermutation( S1, S2 ):
 # Question 1.4 - Palindrome Permutation
 
 
-def IsPalindrome(S):
+def IsPalindrome( S ):
     start = 0
-    end = len(S) - 1
+    end = len( S ) - 1
     while start < end:
         if S[start] != S[end]:
             return False
