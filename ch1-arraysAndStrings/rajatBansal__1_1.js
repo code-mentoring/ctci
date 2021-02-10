@@ -2,8 +2,7 @@
 Implement an algorithm to determine if a string has all unique characters. What if you
 cannot use additional data structures? */
 
-const isUnique = str => {
-
+const isUnique = (str) => {
   if (str.length <= 1) {
     return true;
   }
@@ -13,7 +12,9 @@ const isUnique = str => {
   const uniqueTracker = {};
 
   for (let letter of str) {
-    uniqueTracker[letter] = uniqueTracker[letter] ? uniqueTracker[letter] + 1 : 1;
+    uniqueTracker[letter] = uniqueTracker[letter]
+      ? uniqueTracker[letter] + 1
+      : 1;
   }
 
   for (let letter in uniqueTracker) {
@@ -23,11 +24,46 @@ const isUnique = str => {
   }
 
   return true;
-}
+};
 
+//no additional data structure
+const isUniqueNoDS = (str) => {
+  if (str.length <= 1) {
+    return true;
+  }
+
+  str = str.trim();
+  str = str.split("").sort();
+
+  let firstCharacter = str[0];
+  for (let i = 1; i < str.length; i++) {
+    if (str[i] === firstCharacter) {
+      return false;
+    } else {
+      firstCharacter = str[i];
+    }
+  }
+  return true;
+};
 
 //tests
-console.log(isUnique('helloworld')); //false
-console.log(isUnique('abcdef1234')); //true
-console.log(isUnique('  abcdef1234  ')); //true
-console.log(isUnique('  _abcdef1234__  ')); //false
+const testStrings = [
+  "a",
+  "helloworld",
+  "heloword1122",
+  "abcdef1234",
+  "  abcdef1234  ",
+  "  _abcdef1234__  ",
+];
+
+console.log("Testing below strings with isUnique method");
+for (let testString of testStrings) {
+  console.log(`Is '${testString}' unique? `, isUnique(testString));
+}
+
+console.log("-------------------------------------------");
+
+console.log("Testing below strings with isUniqueNoDS method");
+for (let testString of testStrings) {
+  console.log(`Is '${testString}' unique? `, isUniqueNoDS(testString));
+}
