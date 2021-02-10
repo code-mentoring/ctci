@@ -13,12 +13,7 @@ const isUnique = str => {
   const uniqueTracker = {};
 
   for (let letter of str) {
-    if (uniqueTracker[letter]) {
-      uniqueTracker[letter] += 1;
-    }
-    else {
-      uniqueTracker[letter] = 1;
-    }
+    uniqueTracker[letter] = uniqueTracker[letter] ? uniqueTracker[letter] + 1 : 1;
   }
 
   for (let letter in uniqueTracker) {
