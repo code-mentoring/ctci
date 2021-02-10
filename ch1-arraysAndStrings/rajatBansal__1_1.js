@@ -2,6 +2,7 @@
 Implement an algorithm to determine if a string has all unique characters. What if you
 cannot use additional data structures? */
 
+//with data structure
 const isUnique = (str) => {
   if (str.length <= 1) {
     return true;
@@ -9,7 +10,7 @@ const isUnique = (str) => {
 
   str = str.trim(); //remove trailing and leading whitespaces if any
 
-  const uniqueTracker = {};
+  const uniqueTracker = {}; //using object as the data structure
 
   for (let letter of str) {
     uniqueTracker[letter] = uniqueTracker[letter]
