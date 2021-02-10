@@ -3,7 +3,7 @@
 # using additional data structures.
 
 # Sort a given string and simply compare each character to the next one.
-def isUnique(s):
+def is_unique(s):
     s = sorted(s)
     for i in range(len(s)-1):
         if (s[i] == s[i+1]):
@@ -11,7 +11,7 @@ def isUnique(s):
     return True
 
 # Test.
-someStrings = ["apple", "banana", "cherry", "tuna", "12345", "123445", "he!!0", "he123", "he1233"]
-for s in someStrings:
+some_strings = ["apple", "banana", "cherry", "tuna", "12345", "123445", "he!!0", "he123", "he1233", "he rt", "h tr s"]
+for s in some_strings:
     print(f"Checking if '{s}' is unique.")
-    print(isUnique(s)) 
+    print(is_unique(s)) 
