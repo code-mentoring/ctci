@@ -42,7 +42,23 @@ def checkPermutation(str1 : str, str2 : str):
             return False
     return True
        
-# 1.4 - Palindrome permutation
+# 1.4 - Palindrome permutation - O(n+m) where m is number of unique chars
+def palindromePermutation(someStr : str):
+    d = dict()
+    for c in someStr:
+        if d.get(c) == None:
+            d[c] = 0
+        d[c] += 1
+
+    # palindrome permutation can be defined as no more than one instance of a single character
+    onlyOneSinglechar = False
+    for c in d:
+        if d.get(c) % 2 != 0:
+            if onlyOneSinglechar:
+                return False
+            onlyOneSinglechar = True
+    return True
+
 
 # 1.1 - Test function
 def testIsUnique(someUniqueFunc):
@@ -53,7 +69,7 @@ def testIsUnique(someUniqueFunc):
    print(someUniqueFunc("abcdefghijklmnop") == True)
    print(someUniqueFunc("AabcdefghijklmnopaA") == False)
 
-# 1.2 - Test function
+# 1.2 - Test 
 def testCheckPermutation():
     print(checkPermutation("a", "a") == True)
     print(checkPermutation("a", "aa") == False)
@@ -64,6 +80,19 @@ def testCheckPermutation():
     print(checkPermutation("aaa", "aaa") == True)
     print(checkPermutation("aaa", "aa") == False)
 
+# 1.3 - Test
+def testPalindromePermutation():
+    print(palindromePermutation("a") == True)
+    print(palindromePermutation("aa") == True)
+    print(palindromePermutation("aaa") == True)
+    print(palindromePermutation("aab") == True)
+    print(palindromePermutation("abc") == False)
+    print(palindromePermutation("tacocat") == True)
+    print(palindromePermutation("cba") == False)
+    print(palindromePermutation("aabbc") == True)
+    print(palindromePermutation("aabbcc") == True)
+    print(palindromePermutation("aabc") == False)
 
 # testIsUnique(isUnique)
-testCheckPermutation()
+# testCheckPermutation()
+testPalindromePermutation()
