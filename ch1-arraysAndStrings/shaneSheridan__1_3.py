@@ -47,13 +47,13 @@ def remove_punctuation(s):
     for c in s:
         if c in punctuation:
             s = s.replace(c, "")
-    
+
     return s.lower()
    
     
 # Testing.  
 some_strings = ["aa", "ab", "abc", "aba", "madam", "anzana", "racecar", "raeccar", "11/11/11", 
-                "No lemon, no melon", "an I'm a tuna", "123421", "he!!0", "taco tac"]
+                "No leomn, oo melnn", "an I'm a tuna", "123421", "he!!0", "taco tac"]
 for s in some_strings:
     print(f"Checking if '{s}' is a permutation of a palindrome.")
     print(is_palindrome_permutation(s)) 
