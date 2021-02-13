@@ -8,7 +8,7 @@ const isUnique = (str) => {
     return true;
   }
 
-  str = str.trim(); //remove trailing and leading whitespaces if any
+  str = str.trim().toLowerCase(); //remove trailing and leading whitespaces if any
 
   const uniqueTracker = {}; //using object as the data structure
 
@@ -33,7 +33,7 @@ const isUniqueNoDS = (str) => {
     return true;
   }
 
-  str = str.trim();
+  str = str.trim().toLowerCase();
   str = str.split("").sort();
 
   let firstCharacter = str[0];
