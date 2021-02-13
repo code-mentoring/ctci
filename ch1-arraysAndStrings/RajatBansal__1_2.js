@@ -3,8 +3,8 @@ Given two strings, write a method to decide if one is a permutation of the
 other. */
 
 const isPermutation = (str1, str2) => {
-  str1 = str1.trim();
-  str2 = str2.trim();
+  str1 = str1.trim().toLowerCase();
+  str2 = str2.trim().toLowerCase();
 
   //corner cases
   if (!str1.length && !str2.length) {
