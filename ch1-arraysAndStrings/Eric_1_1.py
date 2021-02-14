@@ -1,29 +1,33 @@
 
-# 1.1 - Is Unique Implement an algorithm to determine if a string has all unique characters. What if you cannot use additional data structures?
+# I'm not used to doing coding challenges, so please go easy on me!  lol
+
+# 1.1 - Is Unique: Implement an algorithm to determine if a string has all unique characters. What if you cannot use additional data structures?
+
+# Note: for all of my solutions, you can run the program and it will then ask you to input the required strings
 
 import sys
 
 # inputs a string
-
 stringcheck = input("Please enter a string: ")
 
+# Checks to make sure input is a valid string
 try:
     val = int(stringcheck)
-    print("Input is not a string, it's an integer number. Number = ", val)
+    print(stringcheck,"is not a string, it's an integer")
     sys.exit()
 except ValueError:
     try:
         val = float(stringcheck)
-        print("Input is not a string, it's a float number. Number = ", val)
+        print(stringcheck,"is not a string, it's a float")
         sys.exit()
     except ValueError:
-        print("Input is a valid string")
+        pass
 
-#initializes variables
+# initializes variables - check will be used to keep a running count of the characers in the input string
 check = ''
 found = 0
 
-# checks to see if character is in check variable
+# Checking to see if the string shows up more than once
 for i in stringcheck:
     if i in check:
         print("The strong does NOT have unique characters")
