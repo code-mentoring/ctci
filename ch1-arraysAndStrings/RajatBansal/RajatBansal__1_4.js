@@ -35,7 +35,17 @@ const isPermutationPalindrome = (str) => {
   return true;
 };
 
-const testStrings = ["", "a", "ab", "abc", "aaaccc", "  abba  ", "Racecar", "radar", "redder"];
+const testStrings = [
+  "",
+  "a",
+  "ab",
+  "abc",
+  "aaaccc",
+  "  abba  ",
+  "Racecar",
+  "radar",
+  "redder",
+];
 console.log("Are following strings having permutation palindromes?");
 for (let testString of testStrings) {
   console.log(`${testString}: ${isPermutationPalindrome(testString)}`);
