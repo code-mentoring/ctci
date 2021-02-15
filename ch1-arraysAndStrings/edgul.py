@@ -92,6 +92,8 @@ def testPalindromePermutation():
     print(palindromePermutation("aabbc") == True)
     print(palindromePermutation("aabbcc") == True)
     print(palindromePermutation("aabc") == False)
+    print(palindromePermutation("aaacc") == True)
+    print(palindromePermutation("aaaccc") == False)
 
 # testIsUnique(isUnique)
 # testCheckPermutation()
