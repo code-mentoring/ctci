@@ -45,6 +45,7 @@ const testStrings = [
   "aabcccccaaa", //a2b1c5a3
   "aaabbcccccdaaa", //a3b2c5d1a3
   "aabbbcdddddde", //a2b3c1d6e1
+  "ABBBBBBbbbbbbcccDd", //A1B6b6c3D1d1
 ];
 for (let testString of testStrings) {
   console.log(`${testString}: ${compressString(testString)}`);
