@@ -57,3 +57,4 @@ for (let stringCombo of testStrings) {
     `${firstStr}, ${secondStr}: ${isPermutation(firstStr, secondStr)}`
   );
 }
+
