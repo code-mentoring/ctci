@@ -8,24 +8,39 @@ const isUnique = (str) => {
     return true;
   }
 
-  str = str.trim(); //remove trailing and leading whitespaces if any
+  str = str.trim().toLowerCase(); //remove trailing and leading whitespaces if any
 
   const uniqueTracker = {}; //using object as the data structure
-
+  /**
+   * abcb => false
+   * {
+   *  a: 1,
+   *  b: 2,
+   *  c: 1,
+   *  0: 1
+   * }
+   *
+   * '0'
+   */
   for (let letter of str) {
-    uniqueTracker[letter] = uniqueTracker[letter]
-      ? uniqueTracker[letter] + 1
-      : 1;
-  }
-
-  for (let letter in uniqueTracker) {
-    if (uniqueTracker[letter] > 1) {
-      return false;
+    if (uniqueTracker[letter]) {
+      return false
+    }
+    else {
+      uniqueTracker[letter] = 1;
     }
   }
-
   return true;
 };
+
+const isUniqueWithSet = str => {
+  const strSet = new Set();
+  str = str.trim().toLowerCase();
+  for (let character of str) {
+    strSet.add(character);
+  }
+  return strSet.size === str.length;
+}
 
 //no additional data structure
 const isUniqueNoDS = (str) => {
@@ -33,15 +48,15 @@ const isUniqueNoDS = (str) => {
     return true;
   }
 
-  str = str.trim();
+  str = str.trim().toLowerCase();
   str = str.split("").sort();
 
-  let firstCharacter = str[0];
+  let previousCharacter = str[0];
   for (let i = 1; i < str.length; i++) {
-    if (str[i] === firstCharacter) {
+    if (str[i] === previousCharacter) {
       return false;
     } else {
-      firstCharacter = str[i];
+      previousCharacter = str[i];
     }
   }
   return true;
@@ -55,11 +70,19 @@ const testStrings = [
   "abcdef1234", //true
   "  abcdef1234  ", //true
   "  _abcdef1234__  ", //false
+  "abc0", //true
 ];
 
 console.log("Testing below strings with isUnique method");
 for (let testString of testStrings) {
   console.log(`Is '${testString}' unique? `, isUnique(testString));
+}
+
+console.log("-------------------------------------------");
+
+console.log("Testing below strings with isUniqueWithSet method");
+for (let testString of testStrings) {
+  console.log(`Is '${testString}' unique? `, isUniqueWithSet(testString));
 }
 
 console.log("-------------------------------------------");
