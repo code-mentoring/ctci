@@ -3,11 +3,11 @@ let string = 'aabcccccaaa';
 stringCompression('aabcccccaaa')
 
 
-//compress string --> then compare lengths 
+//compress string --> then compare lengths  
 //don't repeatedly concatenate strings as this is inefficient 
 
 function stringCompression(string) {
-    //compress
+    //compress string
     let newString = "";
     for (let i = 0; i < string.length; i++) {
         if (string[i] !== string[i - 1]) {
