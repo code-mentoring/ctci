@@ -1,5 +1,3 @@
-let string = 'aabcccccaaa';
-
 stringCompression('aabcccccaaa')
 
 
@@ -49,6 +47,13 @@ function stringCompression(string) {
         jointString += numberString[i]
     }
 
+
+    if (jointString.length >= string.length) {
+        console.log(string)
+        console.log(string.length)
+        return string
+    }
     console.log(jointString)
+    console.log(jointString.length)
     return jointString
 }
