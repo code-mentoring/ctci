@@ -1,3 +1,4 @@
+import copy
 
 # 1.6 - compresses all or none - O(n)
 def compress(inString : str) -> str:
@@ -51,9 +52,44 @@ def rotateMatrix(matrix : list) -> list:
             transpose[i][n-1-j] = temp
     return transpose
 
-# 1.8 - Zero Matrix - clear row and column of found 0 element
-def zeroMatrix(matrix : list) -> list:
-    pass
+# 1.8 - Zero Matrix - clear row and column of found 0 element - 0(n^4) for NxN matrix
+def zeroMatrix(matrix : 'list of lists') -> 'list of lists':
+    output = copy.deepcopy(matrix)
+
+    # list of tuples
+    pointsToZero = []
+    for i,row in enumerate(matrix):
+        for j,item in enumerate(row):
+            if item == 0:
+                pointsToZero.append((i,j))
+
+    # this part is slow 
+    for x,y in pointsToZero:
+        for i in range(len(output)):
+            for j in range(len(output[i])):
+                if x == i or y == j:
+                    output[i][j] = 0
+    return output
+
+def testZeroMatrix():
+    matrix = [[1,2], [3,4]]
+    assert zeroMatrix(matrix) == [[1,2], [3,4]]
+    matrix = [[0,2], [3,4]]
+    assert zeroMatrix(matrix) == [[0,0], [0,4]]
+    matrix = [[1,0], [3,4]]
+    assert zeroMatrix(matrix) == [[0,0], [3,0]]
+
+    matrix = [[1,2,3], [4,5,6], [7,8,9]]
+    assert zeroMatrix(matrix) == [[1,2,3], [4,5,6], [7,8,9]]
+    matrix = [[0,2,3], [4,5,6], [7,8,9]]
+    assert zeroMatrix(matrix) == [[0,0,0], [0,5,6], [0,8,9]]
+    matrix = [[1,0,3], [4,5,6], [7,8,9]]
+    assert zeroMatrix(matrix) == [[0,0,0], [4,0,6], [7,0,9]]
+    matrix = [[1,2,0], [4,5,6], [7,8,9]]
+    assert zeroMatrix(matrix) == [[0,0,0], [4,5,0], [7,8,0]]
+    matrix = [[1,2,3], [4,0,6], [7,8,9]]
+    assert zeroMatrix(matrix) == [[1,0,3], [0,0,0], [7,0,9]]
+
 
 def testRotateMatrix():
     matrix = [[1,2], [3,4]]
@@ -92,5 +128,6 @@ def main():
     testCompress()
     testCompress2()
     testRotateMatrix()
+    testZeroMatrix()
 
 main()
