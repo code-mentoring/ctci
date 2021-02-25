@@ -21,54 +21,52 @@
 #   |1 4 7
 #
 # Approach has two main steps, transpose and flip:
-# 1. Transpose, i.e. swap(matrix[i][j], matrix[j][i]) making the rows as columns and columns as rows. 
+# 1. Transpose, i.e. make the rows as columns and columns as rows. 
 # 2. Flip on vertical or horizontal axis for clockwise or anticlockwise rotation, respectively. 
 #    vertical -> swap(matrix[i][j], matrix[i][N-1-j]
 #    horizontal -> swap(matrix[i][j], matrix[N-1-i][j]
 #
-# E.g. flip first row after transpose using 'N-1-j':
-#   1 (i0, j0): 3-1-0 = 2  --> (i0, j2) 7
-#   4 (i0, j1): 3-1-1 = 1  --> (i0, j1) 4
-#   7 (i0, j2): 3-1-2 = 0  --> (i0, j0) 1
+#    E.g. flip first row after transpose using 'N-1-j':
+#      1 (i0, j0): 3-1-0 = 2  --> (i0, j2) 7
+#      4 (i0, j1): 3-1-1 = 1  --> (i0, j1) 4
+#      7 (i0, j2): 3-1-2 = 0  --> (i0, j0) 1
 #
 # Two-dimensional list can represent a matrix in python.
+#
+# Tip: https://docs.python.org/3/tutorial/datastructures.html#list-comprehensions
 
 def rotate(original_matrix):
-    num_columns = len(original_matrix[0])
-    num_rows = len(original_matrix)
-    print(f"Rotating {num_rows}x{num_columns} matrix.")
+    transposed_matrix = transpose(original_matrix)
+    flipped_transposed_matrix = flip_on_vertical_axis(transposed_matrix)
 
-    transposed_matrix = transpose(original_matrix, num_rows, num_columns)
+    return flipped_transposed_matrix
 
-    return transposed_matrix
+def transpose(matrix):
+    transposed_matrix = []
 
-# Transpose, i.e. swap(matrix[i][j], matrix[j][i]) making the rows as columns and columns as rows. 
-def transpose(matrix, num_rows, num_columns):
-    # Copy whole matrix to know the dimensions, but values will be transposed.
-    transposed_matrix = matrix.copy()
-    # TODO: use https://docs.python.org/3/tutorial/datastructures.html#list-comprehensions
-
-    # Traversal hits every element of multi-dimensional structure using nested loop.
-    # TODO: Avoid duplicate swaps.
-    for row in range(num_rows):
-
-        print(f"row: {row}")
-        print("current transpose:")
-        for r in transposed_matrix:
-            print(r)
-
-        for col in range(num_columns):
-            if (row != col):
-                print(col)
-                print(f"setting {transposed_matrix[row][col]} to {matrix[col][row]}")
-                transposed_matrix[row][col] = matrix[col][row]
+    for column_index in range(len(matrix)):
+        transposed_row = []
+        for row in matrix:
+            transposed_row.append(row[column_index])
+        transposed_matrix.append(transposed_row)
 
     return transposed_matrix  
 
-def flip_vertical(matrix):
-    flipped_matrix = None
+def flip_on_vertical_axis(matrix):
+    flipped_matrix = []
 
+    N = len(matrix)
+    for i in range(N):
+        flipped_row = []
+        for j in range(N):
+            flipped_row.append(matrix[i][N-1-j])
+        flipped_matrix.append(flipped_row)
+
+    return flipped_matrix 
+
+# Testing.
 matrix = [[1,2,3], [4,5,6], [7,8,9]]
+#matrix = [[1,2,3,4], [5,6,7,8], [9,10,11,12], [13,14,15,16]]
 print("original matrix:")
 for row in matrix:
     print(row)
