@@ -41,3 +41,5 @@ console.log(checkPalindrome("Borrow or rob"));
 console.log(checkPalindrome("A nut for a jar of tuna"));
 console.log(checkPalindrome(123454321));
 console.log(checkPalindrome(122213));
+console.log(checkPalindrome("aaaccc"));
+console.log(checkPalindrome("aaacc"));
