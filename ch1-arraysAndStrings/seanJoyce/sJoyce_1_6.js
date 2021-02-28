@@ -8,16 +8,17 @@ function stringCompression(string) {
     //compress the string
     let newString = "";
     for (let i = 0; i < string.length; i++) {
+        //if not equal to previous character, append
         if (string[i] !== string[i - 1]) {
             newString += string[i];
         }
-        if ((i === string.length - 1) && (string[i] === string[i - 1])) {
-
-        } else if ((i === string.length - 1) && (string[i] !== string[i - 1])) {
+        //if last char and not equal to previous char, append
+        if ((i === string.length - 1) && (string[i] !== string[i - 1])) {
             newString += string[i];
         }
         else {
             let myCount = 1;
+            //add to counter while next string is equal to current string
             while (string[i] === string[i + myCount]) {
                 myCount += 1;
             }

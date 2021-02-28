@@ -17,21 +17,29 @@ rotateMatrix(matrix);
 function rotateMatrix(matrix) {
     //init newMatrix
     let newMatrix = [];
-    //loop through original matrix columns
+    //loop through original matrix 
     for (let i = 0; i < matrix.length; i++) {
-        //create new row of said columns
-        let row = matrix
-            //why does matrix.map refer to each column of original matrix? 
-            .map((j) => {
-                //set x-coordinate of element equal to i to create row 
-                return j[i]
-            })
-            //reverse new row
-            .reverse()
+        //create new row array 
+        let row = matrix.map((j) => (j[i])).reverse()
+
         //append new row to newMatrix
         newMatrix.push(row);
+        break;
+        // break;
     }
     console.log(newMatrix)
     return newMatrix;
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
