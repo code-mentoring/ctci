@@ -13,25 +13,25 @@ const compressString = (str) => {
   }
 
   let previousChar = str[0];
-  let compressedStr = "";
+  const compressedStr = [];
   let charCount = 1;
   for (let i = 1; i < str.length; i++) {
     if (str[i] === previousChar) {
       charCount += 1;
     } else {
-      compressedStr = compressedStr.concat(previousChar, charCount);
+      compressedStr.push(previousChar, charCount);
       previousChar = str[i];
       charCount = 1;
     }
   }
   //appending final values here
-  compressedStr = compressedStr.concat(previousChar, charCount);
+  compressedStr.push(previousChar, charCount);
 
   if (compressedStr.length >= str.length) {
     return str;
   }
 
-  return compressedStr;
+  return compressedStr.join('');
 };
 
 const testStrings = [
