@@ -37,15 +37,23 @@ namespace CrackingTheCodingInterview
             {
                 countConsecutive++;
 
-                if (i+1>= str.Length || str.Substring(i,1)!=str.Substring(i+1,1))
+                if (i+1>= str.Length || str[i]!=str[i+1])
                 {
-                    compressedString += "" + str.Substring(i, 1) + countConsecutive;
+                    compressedString += "" + str[i] + countConsecutive;
                     countConsecutive = 0;
 
                 }
             }
 
-            return compressedString;
+            if (compressedString.Length < str.Length)
+            {
+                return compressedString;
+            }
+            else 
+            {
+
+                return str;
+            }
 
         }
 
