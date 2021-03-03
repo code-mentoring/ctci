@@ -21,7 +21,7 @@ It's good practice anyway when working on forked repos.
 * Fetch code-mentoring changes:
   * git fetch upstream
 * Then merge them into your local:
-  * git merge upstream/main
+  * git merge upstream/master
 * Then update your remote fork:
   * git push
 
