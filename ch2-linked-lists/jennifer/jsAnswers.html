@@ -1,0 +1,294 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+
+    </body>
+    <script>
+        /*
+        2.1 Remove Dups: Write code to remove duplicates from an unsorted linked list. 
+        FOLLOW UP How would you solve this problem if a temporary buffer is not allowed?
+
+        2.2 Return Kth to Last: Implement an algorithm to find the kth to last element 
+        of a singly linked list.
+
+        2.3 Delete Middle Node: Implement an algorithm to delete a node in the middle 
+        (i.e., any node but the first and last node, not necessarily the exact middle) 
+        of a singly linked list, given only access to that node. EXAMPLE Input: the 
+        node c from the linked list a -> b -> c -> d -> e -> f Result: nothing is 
+        returned, but the new linked list looks like a -> b -> d -> e -> f
+        */
+
+        /*
+        2.4 Partition: Write code to partition a linked list around a value x, such that 
+        all nodes less than x come before all nodes greater than or equal to x. Ifxis 
+        contained within the list, the values of x only need to be after the elements less 
+        than x (see below). The partition element x can appear anywhere in the "right 
+        partition"; it does not need to appear between the left and right partitions. 
+        EXAMPLE Input: 3 -> 5 -> 8 -> 5 -> 10 -> 2 -> 1 [partition = 5] Output: 3 -> 1 -> 2 -> 10 -> 5 -> 5 -> 8
+
+        2.7 Intersection; Given two (singly) linked lists, determine if the two lists 
+        intersect. Return the inter- secting node. Note that the intersection is defined 
+        based on reference, not value. That is, if the kth node of the first linked list 
+        is the exact same node (by reference) as the j t h node of the second linked list, 
+        then they are intersecting.
+
+        2.8 Loop Detection: Given a circular linked list, implement an algorithm that 
+        returns the node at the beginning of the loop. DEFINITION Circular linked list: 
+        A (corrupt) linked list in which a node's next pointer points to an earlier node, 
+        so as to make a loop in the linked list. EXAMPLE Input: A - > 8 - > C - > D - > E - > C 
+        [the same C as earlier] Output: C
+        */
+
+        let doubleLinked = {
+            node: function (value, forwardPnt, backwardPnt) {
+                let n = Object.create(doubleLinked);
+                n.val = value;
+                n.front = forwardPnt;
+                n.back = backwardPnt;
+
+                return n
+            },
+            startNode: function (value) {
+                let n = doubleLinked.node(value, null, null);
+
+                return n
+            },
+            addStart: function (value, head) {
+                if (head.back === null) {
+                    let n = doubleLinked.node(value, head, null);
+
+                    head.back = n;
+
+                    return n
+                } else {
+                    console.log("Not the head node");
+                    return head
+                }
+            }
+        }
+
+
+        let singleLinked = {
+            node: function (value, pnt){
+                let n = Object.create(singleLinked);
+                n.val = value;
+                n.pointer = pnt;
+
+                return n
+            },
+            startNode: function (value) {
+                let n = singleLinked.node(value, null);
+
+                return n
+            },
+            addStart: function (value) {
+                let n = singleLinked.node(value, this);
+                
+                return n
+            },
+            next: function () {
+                if (this.pointer != null) {
+                    return this.pointer
+                } else {
+                    return this
+                }
+            },
+            findKth: function(k) {
+                let c = this
+                for(i = 0; i < k; i++) {
+                    c = c.next(c);
+                }
+                return c;
+            },
+            findEnd: function () {
+                if (this.pointer === null) {
+                    return this
+                } else {
+                    let n = this.next();
+                    return n.findEnd();
+                }
+            },
+            findKthFromEnd: function (k) {
+                let num = this.length() - k;
+                let out = this.findKth(num);
+
+                console.log(num, out);
+
+                return out
+            },
+            addEnd: function (value) {
+                let end = this.findEnd();
+                let newEnd = singleLinked.node(value, null);
+                end.pointer = newEnd;
+            },
+            length: function () {
+                if (this.pointer === null) {
+                    return 1
+                } else {
+                    let n = this.next();
+                    return 1 + n.length()
+                }    
+            },
+            removeEnd: function () {
+                let c = this.length() - 2;
+                let newEnd = this.findKth(c);
+                
+                newEnd.pointer = null;
+            },
+            removeBegining: function () {
+                return this.next();
+            },
+            removeKth: function (p) {
+                let c = p - 1;
+                let pre = this.findKth(c);
+                let n = this.findKth(p);
+
+                if(n.pointer === null) {
+                    this.removeEnd();
+                } else {
+                    pre.pointer = n.next();
+                }
+            },
+            removeDups: function () {
+                let s = new Set;
+                let v = this.findEnd();
+                let len = this.length();
+
+                for (let i = 0; i < len; i++){
+                    let n = this.findKth(i);
+                    s.add(n.val);
+                }
+
+                let arr = [];
+                s.forEach(function(e0) {arr.push(e0)});
+
+                let out = singleLinked.startNode(arr[arr.length - 1]);
+
+                for (let i = arr.length - 2; i >= 0; i = i - 1){
+                    out = out.addStart(arr[i]);
+                }
+
+                return out
+            },
+            stringOfValues: function () {
+                if (this.pointer === null) {
+                    return String(this.val)
+                } else {
+                    let n = this.next();
+                    return String(this.val) + " : "  + n.stringOfValues();
+                }
+            },
+            addSymbolFlags: function () {
+                if (this.pointer === null) {
+                    this.flag = Symbol();
+                } else if (this.hasOwnProperty('flag') === true) {
+                    let n = this.next();
+                    return n.addSymbolFlags();
+                } else {
+                    this.flag = Symbol();
+                    let n = this.next();
+                    return n.addSymbolFlags();
+                }
+            },
+            removeSymbolFlags: function () {
+                if(this.pointer === null) {
+                    delete this.flag;
+                } else if (this.hasOwnProperty('flag') === false) {
+                    let n = this.next();
+                    return n.removeSymbolFlags();
+                } else {
+                    delete this.flag;
+                    let n = this.next();
+                    return n.removeSymbolFlags();
+                }
+            },
+            checkForFlags: function () {
+                if( (this.pointer === null) && (this.hasOwnProperty('flag') === false) ) {
+                    return false
+                } else if (this.hasOwnProperty('flag') === true) {
+                    return this
+                } else {
+                    let n = this.next();
+                    return n.checkForFlags();
+                }
+            },
+            checkMergers: function (otherList) {
+                //Inputs, this a list and otherList, another list.
+                //Output, false if they don't converge, the node if they do converge
+                otherList.removeSymbolFlags();
+                this.addSymbolFlags();
+
+                let out = otherList.checkForFlags();
+                this.removeSymbolFlags();
+
+                return out;
+
+            }
+        }
+
+        function listFromArray (arr) {
+            let out = singleLinked.startNode(arr[arr.length - 1]);
+
+            for (let i = arr.length - 2; i >= 0; i = i - 1){
+                out = out.addStart(arr[i]);
+            }
+
+            return out
+        }
+
+        function corruptToDoubleHead (list) {
+            //Input: the head node of a list
+            //Output: the second head node of a corrupted list
+
+            let len = list.length();
+            let br = Math.floor(Math.random() * Math.floor(len + 1));
+
+            let branchStart = list.findKth(br);
+
+            let newHead = Math.floor(Math.random()*Math.floor(10));
+
+            branchStart = branchStart.addStart(0);
+
+            for (let i = 1; i < newHead; i++) {
+                branchStart = branchStart.addStart(i);
+            }
+
+            return branchStart
+        }
+
+        
+
+        let a0 = ['alpha', 'bravo', 'charlie', 'delta', 'echo', 'foxtrot'];
+        let a1 = ['alpha', 'bravo', 'alpha', 'echo', 'bravo'];
+
+        let s0 = listFromArray(a0);
+        let s1 = listFromArray(a1);
+
+        s0.addSymbolFlags();
+        s1.addSymbolFlags();
+
+        let c0 = corruptToDoubleHead(s0);
+        let c1 = corruptToDoubleHead(s1);
+        
+        c0.removeSymbolFlags();
+        s1.removeSymbolFlags();
+
+        console.log(s0.stringOfValues());
+        console.log(c0.stringOfValues());
+        console.log(s0.checkMergers(c0));
+        console.log(s0.checkMergers(s1), "Should be false");
+
+
+        console.log(s1.stringOfValues());
+        console.log(c1.stringOfValues());
+        console.log(c1.checkMergers(s1));
+
+
+
+        
+        
+
+    </script>
+</html>
