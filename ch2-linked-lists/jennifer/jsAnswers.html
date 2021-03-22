@@ -192,6 +192,17 @@
                     return n.addSymbolFlags();
                 }
             },
+            addFlagsForLoops: function () {
+                if (this.pointer === null) {
+                    this.flag = Symbol();
+                } else if (this.hasOwnProperty('flag') === true) {
+                    //Do nothing and end the recursion
+                } else {
+                    this.flag = Symbol();
+                    let n = this.next();
+                    return n.addFlagsForLoops();
+                }
+            },
             removeSymbolFlags: function () {
                 if(this.pointer === null) {
                     delete this.flag;
@@ -202,6 +213,17 @@
                     delete this.flag;
                     let n = this.next();
                     return n.removeSymbolFlags();
+                }
+            },
+            removeFlagsForLoops: function () {
+                if(this.pointer === null) {
+                    delete this.flag;
+                } else if (this.hasOwnProperty('flag') === false) {
+                    //Do nothing and stop the recursion
+                } else {
+                    delete this.flag;
+                    let n = this.next();
+                    return n.removeFlagsForLoops();
                 }
             },
             checkForFlags: function () {
@@ -227,6 +249,8 @@
 
             },
             checkLoops: function () {
+                //Input, this is a node
+                //Output, a boolean value of true or false
                 function steps (node) {
                     let n = node.next();
                     if (n.pointer === null) {
@@ -238,9 +262,32 @@
                         return steps(n)
                     }
                 }
+
+                let out = steps(this);
+
+                this.removeFlagsForLoops();
                 
-                return steps(this);
+                return out;
                 
+            },
+            returnLoopNode: function () {
+                if (this.hasOwnProperty('flag') === true) {
+                    return this;
+                } else {
+                    this.flag = Symbol();
+                    let n = this.next();
+                    return n.returnLoopNode();
+                }
+            },
+            breakLoop: function () {
+                let n = this.next();
+                if (n.hasOwnProperty('flag') === true) {
+                    this.pointer = null;
+                    return 
+                } else {
+                    this.flag = Symbol();
+                    return n.breakLoop();
+                }
             }
         }
 
@@ -293,7 +340,14 @@
 
         corruptIntoLoop(s0);
 
+        let cor = s0.returnLoopNode();
+        s0.removeFlagsForLoops();
+
+        s0.breakLoop();
+        s0.removeSymbolFlags();
+
         console.log(s0.checkLoops(), s1.checkLoops());
+        console.log(cor);
 
         
 
