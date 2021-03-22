@@ -225,6 +225,22 @@
 
                 return out;
 
+            },
+            checkLoops: function () {
+                function steps (node) {
+                    let n = node.next();
+                    if (n.pointer === null) {
+                        return false
+                    } else if (n.hasOwnProperty('flag') === true) {
+                        return true
+                    } else {
+                        n.flag = Symbol();
+                        return steps(n)
+                    }
+                }
+                
+                return steps(this);
+                
             }
         }
 
@@ -258,7 +274,16 @@
             return branchStart
         }
 
-        
+        function corruptIntoLoop (list) {
+            let len = list.length();
+            let num = Math.floor(Math.random() * Math.floor(len));
+            let n = list.findKth(num);
+
+            let end = list.findEnd();
+
+            end.pointer = n;
+            
+        }
 
         let a0 = ['alpha', 'bravo', 'charlie', 'delta', 'echo', 'foxtrot'];
         let a1 = ['alpha', 'bravo', 'alpha', 'echo', 'bravo'];
@@ -266,25 +291,11 @@
         let s0 = listFromArray(a0);
         let s1 = listFromArray(a1);
 
-        s0.addSymbolFlags();
-        s1.addSymbolFlags();
+        corruptIntoLoop(s0);
 
-        let c0 = corruptToDoubleHead(s0);
-        let c1 = corruptToDoubleHead(s1);
+        console.log(s0.checkLoops(), s1.checkLoops());
+
         
-        c0.removeSymbolFlags();
-        s1.removeSymbolFlags();
-
-        console.log(s0.stringOfValues());
-        console.log(c0.stringOfValues());
-        console.log(s0.checkMergers(c0));
-        console.log(s0.checkMergers(s1), "Should be false");
-
-
-        console.log(s1.stringOfValues());
-        console.log(c1.stringOfValues());
-        console.log(c1.checkMergers(s1));
-
 
 
         
