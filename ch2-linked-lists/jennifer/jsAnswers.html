@@ -288,6 +288,48 @@
                     this.flag = Symbol();
                     return n.breakLoop();
                 }
+            },
+            listFromArray: function (arr) {
+            let out = singleLinked.startNode(arr[arr.length - 1]);
+
+            for (let i = arr.length - 2; i >= 0; i = i - 1){
+                out = out.addStart(arr[i]);
+            }
+
+            return out
+            },
+            partitionList: function (part) {
+                function lessThan (number, partition) {
+                    return number < partition
+                }
+                function greaterThan (number, partition) {
+                    return number > partition
+                }
+                function equalsTo (number, partition) {
+                    return number === partition
+                }
+                function copyPart (list, part, compare) {
+                    let len = list.length();
+                    let arr = [];
+                    let n = list;
+
+                    for(let i = 0; i < len; i++) {
+                        if (compare(n.val, part) === true) {
+                            arr.push(n.val);
+                        } 
+                        n = n.next();
+                    }
+                    return arr
+                }
+
+                let lower = copyPart(this, part, lessThan);
+                let middle = copyPart(this, part, equalsTo);
+                let higher = copyPart(this, part, greaterThan);
+
+                let whole = lower.concat(middle);
+                whole = whole.concat(higher);
+
+                return singleLinked.listFromArray(whole);
             }
         }
 
@@ -332,22 +374,37 @@
             
         }
 
-        let a0 = ['alpha', 'bravo', 'charlie', 'delta', 'echo', 'foxtrot'];
-        let a1 = ['alpha', 'bravo', 'alpha', 'echo', 'bravo'];
+        function randomArrOfNumbers(max){
+            let len = Math.floor(Math.random() * Math.floor(max - 2)) + 2;
+            let arr = [];
+            for (let i = 0; i < len; i++) {
+                arr.push(Math.floor(Math.random() * Math.floor(100)));
+            }
+
+            return arr
+        }
+
+        let a0 = randomArrOfNumbers(20);
+        let a1 = randomArrOfNumbers(20);
 
         let s0 = listFromArray(a0);
         let s1 = listFromArray(a1);
 
-        corruptIntoLoop(s0);
+        let boundary = Math.floor(Math.random() * Math.floor(100));
 
-        let cor = s0.returnLoopNode();
-        s0.removeFlagsForLoops();
+        console.log("the partition: ", boundary);
 
-        s0.breakLoop();
-        s0.removeSymbolFlags();
+        console.log(a0);
+        s0 = s0.partitionList(boundary);
+        console.log(s0);
 
-        console.log(s0.checkLoops(), s1.checkLoops());
-        console.log(cor);
+        console.log(a1);
+        s1 = s1.partitionList(boundary);
+        console.log(s1);
+    
+
+        
+
 
         
 
