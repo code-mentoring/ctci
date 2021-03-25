@@ -12,13 +12,20 @@ public:
     void print();
     void append(int value);
     void remove(int value);
+
     void removeDupsSlow();
     void removeDups();
+    optional<int> kthLast(int k);
 
-    optional kthLast(int k);
+    Node *kth(int k);
+
+    LinkedList *partitioned(int value);
 
 private:
     Node *node_;
+
+    Node *concat(Node *left, Node *right);
+    Node *tail(Node *node);
 
     bool friend operator==(const LinkedList &lhs, const LinkedList &rhs);
     bool friend operator!=(const LinkedList &lhs, const LinkedList &rhs);

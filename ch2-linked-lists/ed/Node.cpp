@@ -104,18 +104,18 @@ void Node::removeDups(std::set<int> uniqueSet)
 
 // 1.2 - where k=1 -> last item
 // Time complexity O(n) every time
-optional Node::kthLast(int k)
+optional<int> Node::kthLast(int k)
 {
     Node *first = this;
     Node *second = this;
 
     // put first k items ahead
-    if (k < 1) return optional();
+    if (k < 1) return optional<int>();
     for (int i = 1; i < k; i++)
     {
         if (!first->next_)
         {
-            return optional();
+            return optional<int>();
         }
         first = first->next_;
     }
@@ -125,5 +125,5 @@ optional Node::kthLast(int k)
         first = first->next_;
         second = second->next_;
     }
-    return optional(second->value());
+    return optional<int>(second->value());
 }

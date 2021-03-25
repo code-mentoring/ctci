@@ -7,6 +7,7 @@ void testRemoveLinkedList();
 void testRemoveDups();
 void testRemoveDupsSlow();
 void testKthLast();
+void testPartitioned();
 
 int main(int argc, char *argv[])
 {
@@ -15,7 +16,27 @@ int main(int argc, char *argv[])
     testRemoveDupsSlow();
     testRemoveDups();
     testKthLast();
+    testPartitioned();
     return 0;
+}
+
+void testPartitioned()
+{
+    LinkedList l = LinkedList();
+    l.append(1);
+    l.append(7);
+    l.append(8);
+    l.append(5);
+    l.append(4);
+    l.append(10);
+
+    std::cout << "Before Partition: ";
+    l.print();
+
+    std::cout << "After Partition: ";
+    LinkedList *lp = l.partitioned(5);
+    lp->print();
+    
 }
 
 void testKthLast()

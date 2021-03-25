@@ -3,11 +3,12 @@
 #include <iostream>
 #include <set>
 
+template<class T>
 struct optional
 {
-    int value;
+    T value;
     bool valid;
-    optional(int value) : value(value), valid(true) {}
+    optional(T value) : value(value), valid(true) {}
     optional() : value(0), valid(false) {}
 };
 
@@ -29,7 +30,7 @@ public:
     void removeDupsSlow();
     void removeDups(std::set<int> uniqueSet);
 
-    optional kthLast(int k);
+    optional<int> kthLast(int k);
 
 private:
     Node *next_;

@@ -67,8 +67,135 @@ void LinkedList::removeDups()
     node_->removeDups(unique);
 }
 
-optional LinkedList::kthLast(int k)
+optional<int> LinkedList::kthLast(int k)
 {
-    if (!node_) return optional();
+    if (!node_) return optional<int>();
     return node_->kthLast(k);
+}
+
+LinkedList *LinkedList::partitioned(int value)
+{
+    if (!node_)
+    {
+        return new LinkedList();
+    }
+
+    Node *leftTail = nullptr;
+    Node *leftHead = nullptr;
+    Node *rightTail = nullptr;
+    Node *rightHead = nullptr;
+
+    // build two lists - O(n)
+    Node *iter = node_;
+    if (iter->value_ < value) 
+    {
+        leftHead = new Node(iter->value_);
+        leftTail = leftHead;
+    }
+    else 
+    {
+        rightHead = new Node(iter->value_);
+        rightTail = rightHead;
+    }
+    while (iter->next_)
+    {
+        iter = iter->next_;
+        if (iter->value_ < value)
+        {
+            if (!leftHead) 
+            {
+                leftHead = new Node(iter->value_);
+                leftTail = leftHead;
+            }
+            else
+            {
+                leftTail->next_ = new Node(iter->value_);
+                leftTail = leftTail->next_;
+            }
+        }
+        else
+        {
+            if (!rightHead) 
+            {
+                rightHead = new Node(iter->value_);
+                rightTail = rightHead;
+            }
+            else
+            {
+                rightTail->next_ = new Node(iter->value_);
+                rightTail = rightTail->next_;
+            }
+        }
+    }
+
+    //leftHead->print();
+    //rightHead->print();
+
+    // concat the lists - O(1)
+    LinkedList *result = new LinkedList();
+    if (leftHead)
+    {
+        result->node_ = leftHead;
+        if (rightHead)
+        {
+            leftTail->next_ = rightHead;
+        }
+    }
+    else if (rightHead)
+    {
+        result->node_ = rightHead;
+    }
+
+    return result;
+}
+
+Node *LinkedList::concat(Node *left, Node *right)
+{
+    if (!left)
+    {
+        return right;
+    }
+
+    if (!right)
+    {
+        return left;
+    }
+    
+    Node *leftTail = tail(left);
+    leftTail->next_ = right;
+    return left;
+}
+
+Node *LinkedList::tail(Node *node)
+{
+    if (!node)
+    {
+        return nullptr;
+    }
+
+    Node *iter = node;
+    while (iter->next_)
+    {
+        iter = iter->next_;
+    }
+
+    return iter;
+}
+
+Node* LinkedList::kth(int k)
+{
+    int count = 0;
+    Node *iter = node_;
+    while (iter->next_ != nullptr)
+    {
+        iter = iter->next_;
+        count++;
+    }
+
+    if (count == k)
+    {
+        return iter;
+    }
+
+    return nullptr; 
 }
