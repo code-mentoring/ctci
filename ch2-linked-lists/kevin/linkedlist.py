@@ -27,10 +27,26 @@ class LinkedList:
     def __repr__(self):
         return str(self)
 
+    def __iter__(self):
+        curr = self.head
+        def gen():
+            nonlocal curr
+            while curr:
+                result = curr
+                curr = curr.next_node
+                yield result
+        return gen()
+
 class Node:
     def __init__(self, value, next_node=None):
         self.value = value
         self.next_node = next_node
+
+    def __str__(self):
+        return "Node(" + str(self.value) + ", " + ("has next" if self.next_node else "no next")+ ")"
+
+    def __repr__(self):
+        return str(self)
 
 def make_list(*values):
     head = None
@@ -44,4 +60,3 @@ def make_list(*values):
             current = next_node
             head = next_node
     return LinkedList(head)
-
