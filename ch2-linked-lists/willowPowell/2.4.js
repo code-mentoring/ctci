@@ -1,7 +1,7 @@
 class Node {
 	constructor(val, next) {
 		this.val = val;
-		this.next = next; // Node or null;
+		this.next = next; // Node or null
 	};
 };
 
@@ -29,7 +29,7 @@ function partition(head, x) {
 				left = i;
 				i = left.next;
 			} else {
-				left.next = i; // sometimes does nothing
+				left.next = i; // this is where the list "breaks"
 				left = left.next;
 				i = left.next;
 			};
@@ -41,7 +41,7 @@ function partition(head, x) {
 				right = i;
 				i = right.next;
 			} else {
-				right.next = i;
+				right.next = i; // this is where the list "breaks"
 				right = right.next;
 				i = right.next;
 			};

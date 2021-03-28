@@ -2,7 +2,7 @@
 class Node {
 	constructor(val, next) {
 		this.val = val;
-		this.next = next; // Node or null;
+		this.next = next; // Node or null
 	};
 };
 
@@ -38,7 +38,7 @@ function intersection(h1, h2) {
 	while (arr1[i] == arr2[i]) {
 		i ++;
 	};
-	// Number of nodes that need to be removed.
+	// Number of nodes that need to be skipped.
 	const h1HeadLength = arr1.length - i;
 	let ans = h1
 	for (let j = 0; true; j++) {
