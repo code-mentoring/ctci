@@ -17,57 +17,68 @@ function buildLinkedList(arr) {
 	return myNode;
 };
 
-/* Create an array representing a reversed linked list. */
-function buildReverseArr(head) {
-	let arr = [];
-	let i = head;
-	while (i != null) {
-		arr.unshift(i.val);
+
+/* Create an linked list with a specified tail node. */
+function buildLinkedListWithTail(arr, tail) {
+	const myNode = new Node(arr.shift(), null);
+	let i = myNode;
+	for (val of arr) {
+		i.next = new Node(val, null);
 		i = i.next;
-	}
-	return arr;
+	};
+	i.next = tail;
+	return myNode;
 };
 
-function intersection(h1, h2) {
-	// Reverse the arrays because it's easier to iterate forwards in JS.
-	const arr1 = buildReverseArr(h1);
-	const arr2 = buildReverseArr(h2);
 
-	// Count how many matching values there are from the end of the array.
-	let i = 0;
-	while (arr1[i] == arr2[i]) {
-		i ++;
-	};
-	// Number of nodes that need to be skipped.
-	const h1HeadLength = arr1.length - i;
-	let ans = h1
-	for (let j = 0; true; j++) {
-		if (j == h1HeadLength) {
-			return ans;
-		};
-		ans = ans.next;
-	};
+/**
+ * @param {ListNode} headA
+ * @param {ListNode} headB
+ * @return {ListNode}
+ */
+const getIntersectionNode = function(headA, headB) {
+  // Solution with O(n) time complexity and O(n) space complexity.
+  if (headA == null || headB == null) {
+      return null;
+  };
+
+  if (headA == headB) {
+      return headA;
+  };
+
+  // Unpack both nodes into an array, in reverse.
+  let arrA = [];
+  for (let i = headA; i != null; i = i.next) {
+      arrA.unshift(i);
+  };
+  let arrB = [];
+  for (let j = headB; j != null; j = j.next) {
+      arrB.unshift(j);
+  };
+
+  // If the last node doesn't match, there's no intersection.
+  if (arrA[0] != arrB[0]) {
+      return null;
+  };
+
+  // Iterate the arrays until we find a node that doesn't match.
+  let k = 0;
+  while (arrA[k] == arrB[k]) {
+      k++;
+  };
+  // Return the node before the one that didn't match.
+  return arrA[(k-1)];
 };
 
-const nodular = buildLinkedList([1, 2, 3, 5, 8, 1, 2]);
-const nodulus = buildLinkedList([7, 5, 5, 5, 8, 1, 2]);
-const shorty = buildLinkedList([8, 1, 2]);
-const nothingness = buildLinkedList([]);
-const realChallenge = buildLinkedList([1, 2, 3, 5, 8]);
-const realChallengeTheSecond = buildLinkedList([8, 8, 1, 2, 8, 1, 2, 8, 1, 2]);
 
-console.log(intersection(nodular, nodulus));
-console.log("Should look like:")
-console.log(buildLinkedList([5, 8, 1, 2]));
-console.log(intersection(nodular, shorty));
-console.log("Should look like:")
-console.log(buildLinkedList([8, 1, 2]));
-console.log(intersection(nodular, nothingness));
-console.log("Should look like:")
-console.log(null);
-console.log(intersection(nodular, realChallenge));
-console.log("Should look like:")
-console.log(null);
-console.log(intersection(nodular, realChallengeTheSecond));
-console.log("Should look like:")
-console.log(buildLinkedList([8, 1, 2]));
+const tail = buildLinkedList([5, 8, 1, 2])
+const headOne = buildLinkedListWithTail([8, 1, 2], tail)
+const headTwo = buildLinkedListWithTail([42, 42, 42], tail)
+const headThree = buildLinkedListWithTail([42, 42, 42, 42, 42, 42, 42, 42], tail)
+const noMatch = buildLinkedList([5, 8, 1, 2]);
+
+console.log(getIntersectionNode(headOne, headTwo));
+console.log(getIntersectionNode(headOne, headOne));
+console.log(getIntersectionNode(headOne, null));
+console.log(getIntersectionNode(headOne, headThree));
+console.log(getIntersectionNode(tail, noMatch));
