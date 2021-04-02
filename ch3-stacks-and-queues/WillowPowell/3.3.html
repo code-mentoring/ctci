@@ -1,0 +1,33 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>3.3: MinStack</title>
+  <meta name="description" content="Stack 'O' Plates">
+  <meta name="author" content="WillowWillowPow">
+
+</head>
+
+<body>
+  <script src="3.3.js"></script>
+  <form name="init" onsubmit="start(event)">
+  	<label for="capacity">Create DinnerPlates</label>
+		<input id="capacity" type="text" name="capacity" placeholder="Capacity" />
+		<input type="submit" value="Get Going!" />
+	</form>
+  <form name="push-me" onsubmit="push(event)">
+  	<label for="push-val">Push</label>
+		<input id="push-val" type="text" name="push-val" />
+		<input type="submit" value="Push!" />
+	</form> 
+  <form name="pop-me" onsubmit="pop(event)">
+		<input type="submit" value="Pop!" />
+	</form>
+  <form name="popAtStack-me" onsubmit="popAtStack(event)">
+  	<label for="popAtStack-val">Pop At Stack</label>
+		<input id="popAtStack-val" type="text" name="popAtStack-val" />
+		<input type="submit" value="Pop At Stack!" />
+	</form>
+	<p id="stackDisplay"></p>
+</body>
+</html>
