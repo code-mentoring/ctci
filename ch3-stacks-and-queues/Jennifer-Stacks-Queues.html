@@ -1,0 +1,293 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script>
+            /*
+            3.2 Stack Min: How would you design a stack which, in addition to push and pop, has a function min 
+            which returns the minimum eiement? Push, pop and min should all operate in 0(1) time.
+
+            3.3 Stack of Plates: Imagine a (literal) stack of plates. If the stack gets too high, it might topple. 
+            Therefore, in real life, we would likely start a new stack when the previous stack exceeds some 
+            threshold. Implement a data structure SetOfStacks that mimics this. SetOfStacks should be composed of 
+            several stacks and should create a new stack once the previous one exceeds capacity. SetOfStacks.push() 
+            and SetOfStacks.pop() should behave identically to a single stack (that is, pop() should return the same 
+            values as it would if there were just a single stack). FOLLOW UP Implement a function popAt (int index) 
+            which performsa pop operation on a specific sub-stack.
+
+            3.4 Queue via Stacks: Implement a MyQueue class which implements a queue using two stacks.
+            */
+            function randomArrOfNumbers(max){
+            let len = Math.floor(Math.random() * Math.floor(max - 2)) + 2;
+            let arr = [];
+            for (let i = 0; i < len; i++) {
+                arr.push(Math.floor(Math.random() * Math.floor(200)) - 100);
+            }
+
+            return arr
+            }
+
+            class Node {
+                constructor (value, pntUp, pntDown) {
+                    this.val = value;
+                    this.up = pntUp;
+                    this.down = pntDown;
+                }
+                moveUp() {
+                    if (this.up === null){
+                        return this
+                    } else {
+                        return this.up;
+                    }
+                }
+                moveDown() {
+                    if(this.down === null) {
+                        return this
+                    } else {
+                        return this.down;
+                    }
+                }
+                printOutDown(){
+                    let n0 = this.moveDown();
+                    if(this.down === null) {
+                        return String(this.val);
+                    } else {
+                        return String(this.val) + "_" + n0.printOutDown();
+                    }
+                }
+                findMin(minNode){
+                    let n0 = this.moveDown();
+                    if(this.down === null) {
+                        if (this.val < minNode.val){
+                            return this
+                        } else {
+                            return minNode
+                        }
+                        
+                    } else if (this.val < minNode.val) {
+                        minNode = this;
+                        return n0.findMin(this);
+                    } else {
+                        return n0.findMin(minNode);
+                    }
+                }
+                
+            }
+
+            class MinStack {
+                constructor (value) {
+                    this.stack = new Node (value, null, null);
+                    this.min = this.stack;
+                }
+                pushIn(value) {
+                    let n0 = new Node (value, null, this.stack);
+
+                    if (n0.val < this.min.val) {
+                        this.min = n0;
+                    }
+
+                    this.stack.up = n0;
+                    this.stack = n0;
+                }
+                popOut(){
+                    let out = this.stack;
+
+                    this.stack = this.stack.moveDown();
+
+                    if (Object.is(out, this.min) === true){
+                        this.min = this.stack.findMin(this.stack);
+                    }
+
+                    this.stack.up = null;
+                    out.down = null;
+
+                    return out;
+                }
+                popMin(){
+                    let out = this.min;
+
+                    if(out.up === null ) {
+                        return this.popOut();
+                    } else if (out.down === null) {
+                        let above = this.min.moveUp();
+                        above.down = null;
+
+                        this.min = this.stack.findMin(this.stack);
+
+                        return out;
+                    } else {
+                        let above = this.min.moveUp();
+                        let below = this.min.moveDown();
+
+                        above.down = below;
+                        below.up = above;
+
+                        this.min = this.stack.findMin(this.stack);
+
+                        return out;
+                    }
+
+                    
+                }
+                minValCopy(){
+                    return new Node(min.val, null, null);
+                }
+                peek() {
+                    return this.stack.val;
+                }
+                peekMin() {
+                    return this.min.val;
+                }         
+                
+            }
+
+            /*
+            let a = new MinStack(-9);
+
+            for (let i = 0; i < Math.floor(Math.random() * Math.floor(20)); i++){
+                a.pushIn(Math.floor(Math.random() * Math.floor(200)) - 100);
+            }
+
+            console.log(a.stack.printOutDown());
+            console.log(a.min);
+
+            let b = a.popMin();
+
+            console.log(b);
+            console.log(a.stack.printOutDown());
+            console.log(a.min);
+            */
+
+            class PlateStacks {
+                constructor (max) {
+                    this.len = max;
+                    this.first = [];
+                    this.previous = [];
+                }
+                pushIn(value) {
+                    if (this.first.length >= this.len){
+                        this.previous.push(this.first);
+                        this.first = [];
+                        this.first.push(value);
+                    } else {
+                        this.first.push(value);
+                    }
+
+                }
+                popOut(){
+                    if(this.first.length === 0) {
+                        this.first = this.previous.pop();
+                        return this.first.pop();
+                    } else {
+                        return this.first.pop();
+                    }
+                }
+                peek(){
+                    if(this.first.length === 0) {
+                        this.first = this.previous.pop();
+                        return this.first[this.first.length - 1];
+                    } else {
+                        return this.first[this.first.length - 1];
+                    }
+                }
+                popAt(index){
+                    if (this.previous.length === 0) {
+                        return "Error: backlog of stacks is empty";
+                    } else if (index >= this.previous.length) {
+                        return this.previous[this.previous.length - 1].pop();
+                    } else {
+                        return this.previous[index].pop();
+                    }
+                }
+
+            }
+
+            /*
+            let f = new PlateStacks(10);
+            let stop = Math.floor(Math.random() * Math.floor(75))
+
+            for (let i = 0; i < stop; i++) {
+                f.pushIn(Math.floor(Math.random() * Math.floor(200)) - 100);
+            }
+
+            //console.log(f.first);
+            console.log(f.previous);
+
+            let ans0 = f.popAt(10);
+            
+            console.log(ans0);
+            console.log(f.previous);
+
+            */
+
+            class QueueOfStacks {
+                constructor () {
+                    this.takeOut = [];
+                    this.putIn = [];
+                }
+                serve() {
+                    let out = this.takeOut.pop();
+                    this.putIn = this.takeOut.map(x => x).reverse();
+
+                    return out;
+                }
+                lineUp(value){
+                    this.putIn.push(value);
+                    this.takeOut = this.putIn.map(x => x).reverse();
+                }
+            }
+
+            /*
+            let g = new QueueOfStacks();
+            let stop1 = Math.floor(Math.random() * Math.floor(30));
+
+            
+            for(let i = 0; i < stop1; i++) {
+                g.lineUp(Math.floor(Math.random() * Math.floor(200)) - 100)
+            }
+
+            
+            console.log(g);
+            console.log(g.serve());
+
+            */
+
+            class QueueNodes {
+                constructor (value) {
+                    this.front = new Node(value, null, null);
+                    this.back = this.front;
+                }
+                serve() {
+                    let out = this.front;
+                    this.front = this.front.moveDown();
+
+                    out.down = null;
+
+                    return out;
+                }
+                lineUp(value) {
+                    let n = new Node(value, this.back, null);
+                    this.back.down = n;
+                    this.back = n;
+                    
+                }
+            }
+
+            let s = new QueueNodes (9);
+
+            let stop2 = Math.floor(Math.random() * Math.floor(30));
+
+            
+            for(let i = 0; i < stop2; i++) {
+                s.lineUp(Math.floor(Math.random() * Math.floor(200)) - 100);
+            }
+
+            console.log(s);
+
+
+
+        </script>
+    </head>
+    <body>
+
+    </body>
+</html>
