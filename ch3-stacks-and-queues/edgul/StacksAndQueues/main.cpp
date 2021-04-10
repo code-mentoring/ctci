@@ -4,11 +4,13 @@
 #include "queue.h"
 #include "stackmin.h"
 #include "setofstacks.h"
+#include "myqueue.h"
 
 void testStack();
 void testQueue();
 void testStackMin();
 void testSetOfStacks();
+void testMyQueue();
 
 int main()
 {
@@ -16,8 +18,10 @@ int main()
     // testQueue();
     // testStackMin();
 
-    std::cout << "Testing Set of stacks: " <<std:: endl;
-    testSetOfStacks();
+//    std::cout << "Testing Set of stacks: " <<std:: endl;
+//    testSetOfStacks();
+
+    testMyQueue();
     std::cout << "Done." <<std:: endl;
     return 0;
 }
@@ -84,5 +88,21 @@ void testSetOfStacks()
     s.pop();
     s.pop();
     s.print();
+}
 
+void testMyQueue()
+{
+    MyQueue<int> q;
+    q.queue(1);
+    q.queue(2);
+    q.queue(3);
+    q.print();
+    q.dequeue();
+    q.print();
+    q.dequeue();
+    q.print();
+    q.dequeue();
+    q.print();
+    q.queue(5);
+    q.print();
 }
