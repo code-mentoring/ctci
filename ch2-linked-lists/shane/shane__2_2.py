@@ -27,14 +27,7 @@ def get_k_last(k, list):
 
 
 # Testing.
-from singly_linkedlist import *
-
-def get_empty_list():
-    return SinglyLinkedList()
-
-def evaluate(expect, actual):
-    print({True: "Pass.", False: "FAIL!!!"} [expect==actual] +" -- "+ f"Expect {expect}, actual {actual}.")
-
+from test_helper import *
 # [1], k = 1, ans = 1
 aList = get_empty_list()
 aList.insert(1)
