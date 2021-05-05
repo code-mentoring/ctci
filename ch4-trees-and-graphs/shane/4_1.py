@@ -1,18 +1,22 @@
 # 4.1 - Route Between Nodes: 
 # Given a directed graph, design an algorithm to find out whether there is a route between two nodes.
 #
-# Adjacency Lists are represent a graph, where every node stores a list of adjacent nodes (i.e. children). 
-# In a directed graph, an edge like 'A -> B' would be stored only in A's list of adjacent nodes and 
-# B would not know about A. 
+# This solution uses Adjacency Lists to represent the graph, where every node stores a list of adjacent 
+# nodes (i.e. children). In a directed graph, an edge like 'A -> B' would be stored only in A's list of 
+# adjacent nodes and B would not know about A. 
 #
 # Breadth-First Search (BFS) is used to find a path between two nodes (source and destination).
 # BFS starts at a selected node and explores each direct child node before moving further
 # on to their child nodes, i.e. go wide before going deep. If the destination node is found then a
 # path must exist between the two nodes. 
 #
-# This solution implements BFS using a queue to order nodes in terms of next to be visited,
-# and a while loop iterates over that queue to visit each node in turn. 
-# Note: BFS should not be recursive.
+# As BFS should not be recursive, the core of this BFS is a queue that orders nodes in terms of next to 
+# be visited, and a while loop iterates over that queue to visit each node in turn. 
+# If there are multiple paths toward a particular node, then it might be visited more than once, 
+# however the following two alternatives were considered:
+# 1. Add 'visited' flag attribute to Node object; would couple data structure to the algorithm. 
+# 2. Store visited Nodes in separate data structure; would increase storage and algorithm complexity.
+
 from graph import *
 from queue import Queue
 
@@ -26,7 +30,7 @@ def is_path(source, destination):
     awaiting_visit = Queue() 
     awaiting_visit.put(source) # Enqueue.
 
-    while (awaiting_visit.qsize() > 0):
+    while (awaiting_visit.qsize() > 0): # Until all nodes have been visited.
         n = awaiting_visit.get() # Dequeue.
         if (n == destination):
             return True
