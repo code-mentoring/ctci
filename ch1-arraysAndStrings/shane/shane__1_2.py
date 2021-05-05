@@ -1,13 +1,11 @@
 # 1.2 - Check Permutation 
 # Given two strings, write a method to decide if one is a permutation of the other.
 # E.g. “abcd” is a permutation of “dabc”.
-
-# TODO: a permutation is a rearrangement of letters so are identical strings NOT 
-# permutations since there's no rearrangement?
-
+#
 # Permuation strings must be:
 # 1. the same lenth.
 # 2. identical when sorted, but not initially (see TODO above), and assuming case sensitivity here. 
+
 def is_permutation(s1, s2):
     if (is_identical(s1, s2)):
         return False
