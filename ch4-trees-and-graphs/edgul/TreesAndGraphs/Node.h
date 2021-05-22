@@ -4,6 +4,7 @@
 #include <vector>
 #include <assert.h>
 #include <numeric>
+#include <unordered_set>
 #include "Utils.h"
 
 class Node
@@ -34,13 +35,28 @@ private:
     bool visited_ = false;
 };
 
-class BinaryNode
-{
-public:
-    BinaryNode(int value) : value(value) {}
-    BinaryNode(int value, BinaryNode *left, BinaryNode *right) : value(value), left(left), right(right) {}
-    int value;
-    BinaryNode *left = nullptr;
-    BinaryNode *right = nullptr;
-};
 
+// 4.1
+bool routeBetween(Node *start, Node *end)
+{
+    //vprint("Looking for: ", end );
+    //vprint("Checking: "   , start);
+    if (start == end) return true;
+
+    std::vector<Node *> explore = start->nodes;
+    std::unordered_set<Node *> explored; // constant insert and lookup (average), linear insert/lookup for worstcase
+    while (explore.size())
+    {
+        Node *node = explore.at(0);
+        explore.erase(explore.begin());
+
+        if (explored.find(node) == explored.end()) // don't double check a cycle or it's children
+        {
+            //vprint("Checking: ", node);
+            if (node == end) return true;
+            explore.insert(explore.end(), node->nodes.begin(), node->nodes.end());
+        }
+        explored.insert(node);
+    }
+    return false;
+}
