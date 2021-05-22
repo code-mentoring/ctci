@@ -58,5 +58,52 @@ int main()
     assert(!isBalanced(unbalancedTree1));
     assert(!isBalanced(unbalancedTree2));
     
+
+    std::vector<ProjDep> validBuildOrder0;
+    validBuildOrder0.push_back(ProjDep(1,0));
+    std::vector<int> one = {1};
+    assert(build_order(validBuildOrder0) == one);
+
+    std::vector<ProjDep> validBuildOrder1;
+    std::vector<int> twoOne = {2,1};
+    validBuildOrder1.push_back(ProjDep(1,2));
+    assert(build_order(validBuildOrder1) == twoOne);
+    
+    std::vector<ProjDep> validBuildOrder2;
+    validBuildOrder2.push_back(ProjDep(1,2));
+    validBuildOrder2.push_back(ProjDep(2,3));
+    std::vector<int> threeTwoOne = {3,2,1};
+    assert(build_order(validBuildOrder2) == threeTwoOne);
+
+    std::vector<ProjDep> validBuildOrder3;
+    validBuildOrder3.push_back(ProjDep(1,2));
+    validBuildOrder3.push_back(ProjDep(3,2));
+    std::vector<int> twoOneThree = {2, 1, 3};
+    std::vector<int> twoThreeOne = {2, 3, 1}; 
+    assert(build_order(validBuildOrder3) == twoOneThree ||
+           build_order(validBuildOrder3) == twoThreeOne);
+
+    std::vector<ProjDep> validBuildOrder4;
+    validBuildOrder4.push_back(ProjDep(1,2));
+    validBuildOrder4.push_back(ProjDep(1,3));
+    validBuildOrder4.push_back(ProjDep(2,4));
+    validBuildOrder4.push_back(ProjDep(3,4));
+    std::vector<int> fourTwoThreeOne = {4,2,3,1};
+    std::vector<int> fourThreeTwoOne = {4,3,2,1};
+    assert(build_order(validBuildOrder4) == fourTwoThreeOne||
+           build_order(validBuildOrder4) == fourThreeTwoOne);
+
+    std::vector<ProjDep> invalidBuildOrder0;
+    invalidBuildOrder0.push_back(ProjDep(1,2));
+    invalidBuildOrder0.push_back(ProjDep(2,1));
+    std::vector<int> empty;
+    assert(build_order(invalidBuildOrder0) == empty);
+
+    std::vector<ProjDep> invalidBuildOrder1;
+    invalidBuildOrder1.push_back(ProjDep(1,2));
+    invalidBuildOrder1.push_back(ProjDep(2,3));
+    invalidBuildOrder1.push_back(ProjDep(3,1));
+    assert(build_order(invalidBuildOrder1) == empty);
+
     return 0;
 }

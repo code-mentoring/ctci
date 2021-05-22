@@ -15,11 +15,6 @@ public:
     bool isLeaf() { return left == nullptr && right == nullptr; }
 };
 
-class NaryNode
-{
-
-};
-
 int height(BinaryNode *node)
 {
     if (!node) return 0;
