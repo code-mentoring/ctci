@@ -4,51 +4,13 @@
 #include <assert.h>
 #include <numeric>
 #include <unordered_set>
+#include "Node.h"
+#include "Utils.h"
 
-const bool VERBOSE = true;
+bool VERBOSE = true;
 
 using namespace std;
 
-std::vector<int> range(int start, int end)
-{
-    assert(start <= end);
-    std::vector<int> l(end-start);
-    std::iota(l.begin(), l.end(), start);
-    return l;
-}
-
-class Node
-{
-public:
-    Node(int value) : value(value) {}
-    Node(int value, std::vector<Node *> nodes) : value(value), nodes(nodes) {}
-    int value;
-    std::vector<Node *> nodes;
-
-    void print(int depth = 0)
-    {
-        if (visited_)
-        {
-            cout << "CYCLE DETECTED (Not drawn)" << endl;
-            return;
-        }
-
-        for (int i : range(0,depth)) { cout << "->"; }
-        cout << value << endl;
-        visited_ = true;
-        for (Node *node : nodes)
-        {
-            node->print(depth+1);
-        }
-    }
-private:
-    bool visited_ = false;
-};
-
-void vprint(std::string text, Node *node)
-{
-    if (VERBOSE) cout << text.c_str() << node << endl;
-}
 
 // 4.1
 bool routeBetween(Node *start, Node *end)
@@ -75,6 +37,52 @@ bool routeBetween(Node *start, Node *end)
     return false;
 }
 
+// 4.1 - helper
+bool isBinarySearchTree(BinaryNode *root)
+{
+    if (!root)
+    {
+        return true;
+    }
+
+    std::vector<BinaryNode *> nodes; 
+    nodes.push_back(root);
+
+    while (!nodes.empty())
+    {
+        BinaryNode *node = nodes.front();
+        //vprint("Comparing ", node->value);
+        if (node->left)
+        {
+            //vprint("To " , node->left->value);
+            if (node->left->value > node->value)
+            {
+                return false;
+            }
+            nodes.push_back(node->left);
+        }
+        if (node->right)
+        {
+            //vprint("To " , node->right->value);
+            if (node->right->value <= node->value)
+            {
+                return false;
+            }
+            nodes.push_back(node->right);
+        }
+        //vprint("Deleting : ", node->value);
+        nodes.erase(nodes.begin());
+        delete node;
+    }
+
+    return true;
+}
+
+bool isMinimalBinarySearchTree(Node *root) 
+{
+    return false;
+}
+
 int main()
 {
     // tree
@@ -98,6 +106,18 @@ int main()
     assert(routeBetween(linkedList, linkedListTail)); // cycle doesn't throw off
     assert(!routeBetween(linkedList, tree));          // different structures
     assert(!routeBetween(treeSecond, treeThird));     // no path from root child to another root child
+
+    // BinarySearchTree
+    BinaryNode *bstValid = new BinaryNode( 5, new BinaryNode(3), new BinaryNode(6));
+    BinaryNode *bstValid1 = new BinaryNode(5, new BinaryNode(3, new BinaryNode(2), new BinaryNode(4)), new BinaryNode(6, new BinaryNode(6), new BinaryNode(7)));
+    BinaryNode *bstInvalid1 = new BinaryNode(5, new BinaryNode(6), new BinaryNode(7));
+    BinaryNode *bstInvalid2 = new BinaryNode(5, new BinaryNode(4), new BinaryNode(5));
+
+    assert(isBinarySearchTree(bstValid));
+    assert(isBinarySearchTree(bstValid1));
+//    isBinarySearchTree(bstValid1);
+    assert(!isBinarySearchTree(bstInvalid1));
+    assert(!isBinarySearchTree(bstInvalid2));
 
     return 0;
 }
