@@ -7,6 +7,7 @@ SOURCES += \
         main.cpp
 
 HEADERS += \
+    MyQueue.h \
     queue.h \
     setofstacks.h \
     stack.h \
