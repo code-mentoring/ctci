@@ -3,77 +3,11 @@
 #include <vector>
 #include <assert.h>
 #include <numeric>
-#include <unordered_set>
+#include "Node.h"
+#include "Tree.h"
+#include "Utils.h"
 
-const bool VERBOSE = true;
-
-using namespace std;
-
-std::vector<int> range(int start, int end)
-{
-    assert(start <= end);
-    std::vector<int> l(end-start);
-    std::iota(l.begin(), l.end(), start);
-    return l;
-}
-
-class Node
-{
-public:
-    Node(int value) : value(value) {}
-    Node(int value, std::vector<Node *> nodes) : value(value), nodes(nodes) {}
-    int value;
-    std::vector<Node *> nodes;
-
-    void print(int depth = 0)
-    {
-        if (visited_)
-        {
-            cout << "CYCLE DETECTED (Not drawn)" << endl;
-            return;
-        }
-
-        for (int i : range(0,depth)) { cout << "->"; }
-        cout << value << endl;
-        visited_ = true;
-        for (Node *node : nodes)
-        {
-            node->print(depth+1);
-        }
-    }
-private:
-    bool visited_ = false;
-};
-
-void vprint(std::string text, Node *node)
-{
-    if (VERBOSE) cout << text.c_str() << node << endl;
-}
-
-// 4.1
-bool routeBetween(Node *start, Node *end)
-{
-    vprint("Looking for: ", end );
-    vprint("Checking: "   , start);
-    if (start == end) return true;
-
-    std::vector<Node *> explore = start->nodes;
-    std::unordered_set<Node *> explored; // constant insert and lookup (average), linear insert/lookup for worstcase
-    while (explore.size())
-    {
-        Node *node = explore.at(0);
-        explore.erase(explore.begin());
-
-        if (explored.find(node) == explored.end()) // don't double check a cycle or it's children
-        {
-            vprint("Checking: ", node);
-            if (node == end) return true;
-            explore.insert(explore.end(), node->nodes.begin(), node->nodes.end());
-        }
-        explored.insert(node);
-    }
-    return false;
-}
+bool VERBOSE = false;
 
 int main()
 {
@@ -81,8 +15,6 @@ int main()
     Node *treeSecond = new Node(2, { new Node(5), new Node(6) });
     Node *treeThird  = new Node(3, { new Node(7) });
     Node *tree = new Node(1, { treeSecond , treeThird, new Node(4)});
-    // tree->print();
-    // cout << endl;
 
     // linked list with cycle
     Node *linkedListTail = new Node(4);
@@ -90,14 +22,88 @@ int main()
     Node *second = new Node(2,     { third  });
     Node *linkedList = new Node(1, { second });
     third->nodes.push_back(second); // create cycle
-    // linkedList->print();
-    // cout << endl;
 
-    // tests
+    // tests - route between
     assert(routeBetween(linkedList, linkedList));     // pretty basic
     assert(routeBetween(linkedList, linkedListTail)); // cycle doesn't throw off
     assert(!routeBetween(linkedList, tree));          // different structures
     assert(!routeBetween(treeSecond, treeThird));     // no path from root child to another root child
+
+    // BinarySearchTree prep
+    BinaryNode *bstValid = new BinaryNode( 5, new BinaryNode(3), new BinaryNode(6));
+    BinaryNode *bstValid1 = new BinaryNode(5, new BinaryNode(3, new BinaryNode(2), new BinaryNode(4)), new BinaryNode(6, new BinaryNode(6), new BinaryNode(7)));
+    BinaryNode *bstInvalid1 = new BinaryNode(5, new BinaryNode(6), new BinaryNode(7));
+    BinaryNode *bstInvalid2 = new BinaryNode(5, new BinaryNode(4), new BinaryNode(5));
+
+    // tests - bst check
+    assert(isBinarySearchTree(bstValid));
+    assert(isBinarySearchTree(bstValid1));
+    assert(!isBinarySearchTree(bstInvalid1));
+    assert(!isBinarySearchTree(bstInvalid2));
+
+    BinaryNode *balancedTree0 = new BinaryNode(1);
+    BinaryNode *balancedTree1 = new BinaryNode(1, new BinaryNode(1), nullptr);
+    BinaryNode *balancedTree2 = new BinaryNode(1, new BinaryNode(1), new BinaryNode(1));
+    BinaryNode *balancedTree3 = new BinaryNode(1, new BinaryNode(1, new BinaryNode(1), nullptr), new BinaryNode(1));
+    BinaryNode *balancedTree4 = new BinaryNode(1, new BinaryNode(1), new BinaryNode(1, new BinaryNode(1), nullptr));
+    BinaryNode *unbalancedTree0 = new BinaryNode(1, new BinaryNode(2, new BinaryNode(3), nullptr), nullptr); 
+    BinaryNode *unbalancedTree1 = new BinaryNode(1, nullptr, new BinaryNode(2, new BinaryNode(3), nullptr)); 
+    BinaryNode *unbalancedTree2 = new BinaryNode(1, nullptr, new BinaryNode(2, nullptr, new BinaryNode(3))); 
+    assert(isBalanced(balancedTree0));
+    assert(isBalanced(balancedTree1));
+    assert(isBalanced(balancedTree2));
+    assert(isBalanced(balancedTree3));
+    assert(isBalanced(balancedTree4));
+    assert(!isBalanced(unbalancedTree0));
+    assert(!isBalanced(unbalancedTree1));
+    assert(!isBalanced(unbalancedTree2));
+    
+
+    std::vector<ProjDep> validBuildOrder0;
+    validBuildOrder0.push_back(ProjDep(1,0));
+    std::vector<int> one = {1};
+    assert(build_order(validBuildOrder0) == one);
+
+    std::vector<ProjDep> validBuildOrder1;
+    std::vector<int> twoOne = {2,1};
+    validBuildOrder1.push_back(ProjDep(1,2));
+    assert(build_order(validBuildOrder1) == twoOne);
+    
+    std::vector<ProjDep> validBuildOrder2;
+    validBuildOrder2.push_back(ProjDep(1,2));
+    validBuildOrder2.push_back(ProjDep(2,3));
+    std::vector<int> threeTwoOne = {3,2,1};
+    assert(build_order(validBuildOrder2) == threeTwoOne);
+
+    std::vector<ProjDep> validBuildOrder3;
+    validBuildOrder3.push_back(ProjDep(1,2));
+    validBuildOrder3.push_back(ProjDep(3,2));
+    std::vector<int> twoOneThree = {2, 1, 3};
+    std::vector<int> twoThreeOne = {2, 3, 1}; 
+    assert(build_order(validBuildOrder3) == twoOneThree ||
+           build_order(validBuildOrder3) == twoThreeOne);
+
+    std::vector<ProjDep> validBuildOrder4;
+    validBuildOrder4.push_back(ProjDep(1,2));
+    validBuildOrder4.push_back(ProjDep(1,3));
+    validBuildOrder4.push_back(ProjDep(2,4));
+    validBuildOrder4.push_back(ProjDep(3,4));
+    std::vector<int> fourTwoThreeOne = {4,2,3,1};
+    std::vector<int> fourThreeTwoOne = {4,3,2,1};
+    assert(build_order(validBuildOrder4) == fourTwoThreeOne||
+           build_order(validBuildOrder4) == fourThreeTwoOne);
+
+    std::vector<ProjDep> invalidBuildOrder0;
+    invalidBuildOrder0.push_back(ProjDep(1,2));
+    invalidBuildOrder0.push_back(ProjDep(2,1));
+    std::vector<int> empty;
+    assert(build_order(invalidBuildOrder0) == empty);
+
+    std::vector<ProjDep> invalidBuildOrder1;
+    invalidBuildOrder1.push_back(ProjDep(1,2));
+    invalidBuildOrder1.push_back(ProjDep(2,3));
+    invalidBuildOrder1.push_back(ProjDep(3,1));
+    assert(build_order(invalidBuildOrder1) == empty);
 
     return 0;
 }
