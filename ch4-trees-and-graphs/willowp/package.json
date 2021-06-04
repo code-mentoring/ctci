@@ -1,0 +1,16 @@
+{
+  "name": "willow-chapter-4",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "4.1": "nodemon 4.1.js",
+    "4.2": "nodemon 4.2.js",
+    "4.3": "nodemon 4.3.js",
+    "4.7": "nodemon 4.7.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "willowp",
+  "license": "ISC"
+}

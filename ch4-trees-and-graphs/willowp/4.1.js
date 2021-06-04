@@ -1,36 +1,4 @@
-class LLNode {
-  constructor(val, next) {
-    this.val = val;
-    this.next = next;
-  }
-}
-
-class Queue {
-  constructor() {
-    this.head = null;
-    this.tail = null;
-  }
-  enqueue(node) {
-    if (this.head === null) {
-      this.head = new LLNode(node, null);
-      this.tail = this.head;
-    } else {
-      this.tail.next = new LLNode(node, null);
-      this.tail = this.tail.next;
-    }
-  }
-  isempty() {
-    return this.head === null;
-  }
-  dequeue() {
-    if (this.isempty()) {
-      return undefined;
-    }
-    const answer = this.head.val;
-    this.head = this.head.next;
-    return answer;
-  }
-}
+const { Queue, SinglyLinkedList } = require('./data-structures');
 
 class GNode {
   constructor(val, adjacent) {
@@ -40,12 +8,12 @@ class GNode {
   }
 }
 
-function BreadthFirstSearch(source, destination) {
+function breadthFirstSearch(source, destination) {
   const queue = new Queue();
   source.marked = true;
   queue.enqueue(source);
 
-  while (!queue.isempty()) {
+  while (!queue.isEmpty()) {
     const current = queue.dequeue();
     for (let neighb of current.adjacent) {
       if (neighb === destination) {
@@ -60,8 +28,8 @@ function BreadthFirstSearch(source, destination) {
   return false;
 }
 
-function RouteBetweenNodes(n1, n2) {
-  return BreadthFirstSearch(n1, n2) || BreadthFirstSearch(n2, n1);
+function routeBetweenNodes(n1, n2) {
+  return breadthFirstSearch(n1, n2) || breadthFirstSearch(n2, n1);
 }
 
 /* Test Cases */
@@ -82,7 +50,7 @@ nodeB1.adjacent.push(nodeC1)
 nodeC1.adjacent.push(nodeD1)
 nodeD1.adjacent.push(nodeB1, nodeC1)
 
-console.log(RouteBetweenNodes(nodeA1, nodeD1), '=== true')
+console.log(routeBetweenNodes(nodeA1, nodeD1), '=== true')
 
 // Graph 2: {
 //   a: ['a', 'b'],
@@ -100,7 +68,7 @@ nodeB2.adjacent.push()
 nodeC2.adjacent.push()
 nodeD2.adjacent.push(nodeB2, nodeC2)
 
-console.log(RouteBetweenNodes(nodeA2, nodeD2), '=== false')
+console.log(routeBetweenNodes(nodeA2, nodeD2), '=== false')
 
 // Graph 3 {
 //   a: ['a'],
@@ -119,7 +87,7 @@ nodeB3.adjacent.push()
 nodeC3.adjacent.push()
 nodeD3.adjacent.push(nodeB3, nodeC3)
 
-console.log(RouteBetweenNodes(nodeA3, nodeD3), '=== false')
+console.log(routeBetweenNodes(nodeA3, nodeD3), '=== false')
 
 // const graph4 = {
 //   a: [],
@@ -137,7 +105,7 @@ nodeB4.adjacent.push(nodeA4)
 nodeC4.adjacent.push(nodeD4)
 nodeD4.adjacent.push(nodeB4, nodeC4)
 
-console.log(RouteBetweenNodes(nodeA4, nodeD4), '=== true')
+console.log(routeBetweenNodes(nodeA4, nodeD4), '=== true')
 
 // const graph5 = {
 //   a: ['a'],
@@ -159,5 +127,5 @@ nodeC5.adjacent.push(nodeE5)
 nodeD5.adjacent.push(nodeC5)
 nodeE5.adjacent.push(nodeB5, nodeC5)
 
-console.log(RouteBetweenNodes(nodeA5, nodeD5), '=== true')
+console.log(routeBetweenNodes(nodeA5, nodeD5), '=== true')
 
