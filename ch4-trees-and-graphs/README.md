@@ -38,7 +38,7 @@ node never differ by more than one.
 4.5 - Validate BST: 
 Implement a function to check if a binary tree is a binary search tree.
 
-4.6 - Build Order: 
+4.6/4.7(depending on version) - Build Order: 
 You are given a list of projects and a list of dependencies (which is a list of pairs of
 projects, where the second project is dependent on the first project). Ail of a project's dependencies
 must be built before the project is. Find a build order that will allow the projects to be built. If there
@@ -50,3 +50,13 @@ a, b, c, d, e, f
 dependencies:
 (a, d), (f, b), (b, d), (f, a), (d, c)
 Output: F, e, a, b, d, c
+
+--
+
+4.8 First Common Ancestor: Design an algorithm and write code to find the first common ancestor
+of two nodes in a binary tree. Avoid storing additional nodes in a data structure. NOTE: This is not
+necessarily a binary search tree.
+
+4.9 BST Sequences: A binary search tree was created by traversing through an array from left to right
+and inserting each element. Given a binary search tree with distinct elements, print all possible
+arrays that could have led to this tree.
