@@ -1,52 +1,46 @@
-const { BinaryTree } = require('./data-structures');
+const {BinaryTree} = require('./data-structures');
 
-function successor(node) {
-  if (node.right) {
-    return leftmostChild(node.right) || node.right;
+function sequences(root, answer = []) {
+  if (!root) {
+    return answer;
   }
-  return findNextParent(node);
-}
+  answer.push([root.val]);
+  addChildren(root);
 
-function leftmostChild(node) {
-  if (!node.left) {
-    return null;
+  function addChildren(node) {
+    if (node.left) {
+      addChild(node, node.left);
+      addChildren(node.left);
+    }
+    if (node.right) {
+      addChild(node, node.right);
+      addChildren(node.right);
+    }
   }
-  return findLeftmost(node.left);
-}
 
-function findLeftmost(node) {
-  if (node.left) {
-    return findLeftmost(node.left);
+  function addChild(node, child) {
+    answer = answer.reduce((answerAcc, sequence) => {
+      const nodeIndex = sequence.indexOf(node.val);
+      for (let i = nodeIndex; i < sequence.length; i++) {
+        answerAcc.push([
+          ...sequence.slice(0, i + 1),
+          child.val,
+          ...sequence.slice(i + 1),
+        ]);
+      }
+      return answerAcc;
+    }, []);
   }
-  return node;
-}
 
-function findNextParent(node) {
-  if (!node.parent) {
-    return null;
-  }
-  if (node.parent.val > node.val) {
-    return node.parent;
-  }
-  return findNextParent(node.parent);
+  return answer;
 }
 
 // Test tree #1
-const a = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+const a = [0, 1, 2, 3, 4]
 const root = BinaryTree.bst(a);
-const arr = Object.values(a).map((num) => BinaryTree.binarySearch(root, num));
-arr.forEach((node, i) => {
-  const expected = arr[i + 1] || null;
-  const result = successor(node);
-  console.log(result === expected);
-});
+console.log(sequences(root));
 
-// Test tree #2
-const b = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+// Test tree #1
+const b = [0, 1, 2, 3, 4, 5]
 const boot = BinaryTree.bst(b);
-const brr = Object.values(b).map((num) => BinaryTree.binarySearch(boot, num));
-brr.forEach((node, i) => {
-  const expected = brr[i + 1] || null;
-  const result = successor(node);
-  console.log(result === expected);
-});
+console.log(sequences(boot));
