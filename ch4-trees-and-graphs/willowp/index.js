@@ -6,3 +6,4 @@ const buildOrder = require('./4.7');
 const firstCommonAncestor = require('./4.8');
 const firstCommonAncestor2 = require('./4.8.2');
 const sequences = require('./4.9');
+const getRandomNode = require('./4.11');

@@ -13,8 +13,12 @@
     "4.8": "nodemon 4.8.js",
     "4.8.2": "nodemon 4.8.2.js",
     "4.9": "nodemon 4.9.js",
+    "4.11": "nodemon 4.11.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "willowp",
-  "license": "ISC"
+  "license": "ISC",
+  "nodemonConfig": {
+    "watch": [".", "../../../data-structures"]
+  }
 }
