@@ -6,18 +6,23 @@ class ChaosTree {
     this.nodesLeft = 0;
     this.nodesRight = 0;
   }
+
   get totalNodes() {
     return this.nodesLeft + this.nodesRight + 1;
   }
+
   get totalSlots() {
     return this.totalNodes + 1;
   }
+
   get slotsLeft() {
     return this.nodesLeft + 1;
   }
+
   get slotsRight() {
     return this.nodesRight + 1;
   }
+
   insert(val) {
     const newNode = new ChaosTree(val);
 
@@ -144,6 +149,17 @@ class ChaosTree {
       return this.left.getRandomNode();
     }
     return this.right.getRandomNode();
+  }
+
+  static initiateChaos(n, randomizer = Math.random) {
+    if (n === 0) {
+      return null
+    };
+    const root = new ChaosTree(randomizer());
+    for (let i = 1; i <= n; i++) {
+      root.insert(randomizer());
+    }
+    return root;
   }
 
   static weightedRandom(...args) {

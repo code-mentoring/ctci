@@ -1,4 +1,5 @@
 const { ChaosTree } = require('./data-structures');
+const { rword } = require('rword');
 
 const chaos = new ChaosTree(1);
 
@@ -19,3 +20,8 @@ console.log(chaos);
 console.log(chaos.delete());
 console.log(JSON.stringify(chaos, null, 2));
 
+const chaos2 = ChaosTree.initiateChaos(6, rword.generate);
+console.log(chaos2);
+
+const chaos3 = ChaosTree.initiateChaos(6);
+console.log(chaos3);
