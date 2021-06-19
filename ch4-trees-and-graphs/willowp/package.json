@@ -18,6 +18,12 @@
   },
   "author": "willowp",
   "license": "ISC",
+  "nodemonConfig": {
+    "watch": [
+      ".",
+      "../../../data-structures"
+    ]
+  },
   "dependencies": {
     "rword": "^3.2.0"
   }
