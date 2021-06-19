@@ -32,7 +32,7 @@ int height(BinaryNode *node)
         rightHeight = height(node->right);
     }
 
-    return std::max(leftHeight, rightHeight) + 1;
+    return std::fmax(leftHeight, rightHeight) + 1;
 }
 
 // 4.4 - check balanced
@@ -81,4 +81,51 @@ bool isBinarySearchTree(BinaryNode *root)
     }
 
     return true;
+}
+
+// 4.10 - is root1 a subtree of root2
+bool isSubTree(BinaryNode *root1, BinaryNode *root2)
+{
+    if (root1)
+    {
+        if (!root2)
+        {
+            return false;
+        }
+        // else { proceed to check values }
+    }
+    else
+    {
+        if (root2)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    if (root1->value == root2->value)
+    {
+        if (isSubTree(root1->left,  root2->left) &&
+            isSubTree(root1->right, root2->right))
+        {
+            return true;
+        }
+    }
+
+    if (root2->left)
+    {
+        if (isSubTree(root1, root2->left))
+        {
+            return true;
+        }
+    }
+
+    if (root2->right)
+    {
+        if (isSubTree(root1, root2->right))
+        {
+            return true;
+        }
+    }
+    return false;
 }

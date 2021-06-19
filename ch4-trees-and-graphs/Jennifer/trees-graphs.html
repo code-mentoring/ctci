@@ -1,0 +1,344 @@
+
+
+<html>
+    <head>
+        <script>
+        /*
+            4.1 - Route Between Nodes: Given a directed graph, design an algorithm to find out whether there 
+            is a route between two nodes.
+
+            4.2 - Minimal Tree: Given a sorted (increasing order) array with unique integer elements, 
+            write an algorithm to create a binary search tree with minimal height.
+
+            4.3 - List of Depths: Given a binary tree, design an algorithm which creates a linked list 
+            of all the nodes at each depth (e.g., if you have a tree with depth D, you'll have D linked lists)
+
+            4.4 - Check Balanced: Implement a function to check if a binary tree is balanced. For the purposes of 
+            this question, a balanced tree is defined to be a tree such that the heights of the two subtrees of 
+            any node never differ by more than one.
+
+            4.5 - Validate BST: Implement a function to check if a binary tree is a binary search tree.
+
+            4.6 - Build Order: You are given a list of projects and a list of dependencies (which is a 
+            list of pairs of projects, where the second project is dependent on the first project). Ail 
+            of a project's dependencies must be built before the project is. Find a build order that will 
+            allow the projects to be built. If there is no valid build order, return an error. EXAMPLE 
+            Input: p r o j e c t s : a, b, c, d, e, f dependencies: (a, d), (f, b), (b, d), (f, a), (d, c) 
+            Output: F, e, a, b, d, c
+
+            4.8 First Common Ancestor: Design an algorithm and write code to find the first common ancestor 
+            of two nodes in a binary tree. Avoid storing additional nodes in a data structure. NOTE: This is 
+            not necessarily a binary search tree.
+
+            4.9 BST Sequences: A binary search tree was created by traversing through an array from left to right 
+            and inserting each element. Given a binary search tree with distinct elements, print all possible 
+            arrays that could have led to this tree.
+        */
+
+        function getIntRange10() {
+            return Math.floor(Math.random()*(11 - 0) + 0)
+        }
+
+        function randomArrOfNumbers(max){
+            let len = Math.floor(Math.random() *(max - 2) + 2);
+            let arr = [];
+
+            for (let i = 0; i < len; i++) {
+                arr.push(Math.floor(Math.random() * (100 - 0) + 0));
+            }
+
+            return arr
+        }
+
+        class NodeBinaryTree {
+            constructor(val, pnt1, pnt2) {
+                this.value = val;
+                this.pnt1 = pnt1;
+                this.pnt2 = pnt2;
+            }
+            sprout(val){
+                if(this.pnt1 === null){
+                    this.pnt1 = new NodeBinaryTree(val, null, null);
+                } else if(this.pnt2 === null) {
+                    this.pnt2 = new NodeBinaryTree(val, null, null);
+                }
+            }
+            randomNumSprout(getNum){ //pass in function to get a random number
+                if(this.pnt1 === null) {
+                    this.pnt1 = new NodeBinaryTree(getNum(), null, null);
+                }
+                if(this.pnt2 === null) {
+                    this.pnt2 = new NodeBinaryTree(getNum(), null, null);
+                }
+            }
+            pyramidTreeRandomVal(depth, getNum) {
+                if(depth < 1) {
+                    //do nothing
+                } else {
+                    this.randomNumSprout(getNum);
+                    this.pnt1.pyramidTreeRandomVal(depth - 1, getNum);
+                    this.pnt2.pyramidTreeRandomVal(depth - 1, getNum);
+                }
+                
+            }
+            leafCheck(){
+                if(this.pnt1 === null || this.pnt2 === null) {
+                    return true
+                } else {
+                    return false
+                }
+            }
+            findLeafs(arr){
+                if(this.pnt1 === null || this.pnt2 === null) {
+                    arr.push(this);
+                } else {
+                    if(this.pnt1 !== null){
+                        this.pnt1.findLeafs(arr);
+                    }
+                    if(this.pnt2 !== null) {
+                        this.pnt2.findLeafs(arr);
+                    }
+                }
+            }
+            
+            
+            
+
+        }
+        
+        function pyramidFromArray(arr) {
+            
+            let head = new NodeBinaryTree(arr.pop(), null, null);
+
+            while( arr.length > 0) {
+
+                if (head.leafCheck() === true){
+                    head.sprout(arr.pop());
+                }
+
+                if(arr.length > 0 && head.leafCheck() === true) {
+                    head.sprout(arr.pop());
+                }
+
+                if(head.leafCheck() === false) {
+                    let leafList = [];
+                    head.findLeafs(leafList);
+                    
+                    while(leafList.length > 0 && arr.length > 0){
+                        let node = leafList.pop();
+                        node.sprout(arr.pop(), null, null);
+                        if(arr.length !== 0 && node.leafCheck() === true) {
+                            node.sprout(arr.pop(), null, null);
+                        }
+                    }
+
+                }
+            }
+
+            return head
+        }
+
+        class BSearchNode {
+            constructor(val, lessThan, greaterThan){
+                this.value = val;
+                this.lower = lessThan;
+                this.higher = greaterThan;
+            }
+            sprout(val) {
+                if (this.value > val){
+                    if(this.lower === null) {
+                        this.lower = new BSearchNode(val, null, null);
+                    } else {
+                        this.lower.sprout(val);
+                    }
+                }
+                if (this.value < val) {
+                    if(this.higher === null) {
+                        this.higher = new BSearchNode(val, null, null);
+                    } else {
+                        this.higher.sprout(val);
+                    }
+                }
+            }
+            print(){
+                
+                return JSON.stringify(this, null, 2);
+            }
+
+        }
+
+        class listNode{
+            constructor (val, point){
+                this.value = val;
+                this.pnt = point;
+            }
+        }
+
+        function ShallowSearchTree(arr) {
+
+            function insertion(arr, head){
+                //head needs to be a BSearchNode
+                if (arr.length === 3){
+                    head.sprout(arr[1]);
+                    head.sprout(arr[0]);
+                    head.sprout(arr[2]);
+                } else if(arr.length === 2) {
+                    head.sprout(arr[0]);
+                    head.sprout(arr[1]);
+                } else if(arr.length === 1) {
+                    head.sprout(arr[0]);
+                } else if (arr.length === 0) {
+                    //Do Nothing  
+                } else {
+                    let middle = Math.floor(arr.length/2);
+                    head.sprout(arr[middle]);
+
+                    insertion(arr.slice(0, middle), head);
+                    insertion(arr.slice(middle + 1), head);
+
+                }
+
+                
+            }
+
+            let input = new Set(arr.sort((a, b) => a-b) );
+            input = Array.from(input);
+
+            let start = Math.floor(input.length/2);
+            let head = new BSearchNode(input[start], null, null);
+
+            insertion(arr.slice(0, start), head);
+            insertion(arr.slice(start + 1), head);
+
+            return head
+
+        }
+        
+        function GetListsOfDepths(treeHead, pnt1, pnt2){
+
+            function listCreation(arr){
+                let a2 = arr.map( x => x);
+                let listHead = new listNode (a2.pop(), null);
+
+                while (a2.length > 0){
+                    listHead = new listNode (a2.pop(), listHead);
+                }
+
+                return listHead
+            }
+
+            function recursionNext(node, depth) {
+                if(depth < output.length) {
+                    output[depth].push(node.value);
+                } else if( depth === output.length) {
+                    output.push([node.value]);  
+                } else {
+                    console.log("output isn't expanding.");
+                }
+
+                if(node[pnt1] === null) {
+                    //do nothing
+                } else {
+                    recursionNext(node[pnt1], depth + 1);
+                }
+
+                if(node[pnt2] === null) {
+                    //do nothing
+                } else {
+                    recursionNext(node[pnt2], depth + 1);
+                }
+                
+            }
+
+            let output = [[]];
+
+            recursionNext(treeHead, 0);
+
+            output2 = [];
+
+            for(let i = 0; i < output.length; i++){
+                output2.push(listCreation(output[i]));
+            }
+
+            return output2
+
+
+        }
+        
+        function commonAnsestor(root, child_1, child_2){
+            function prune(start, child) {
+                //Start is a node, child is a node object we are checking for.
+                //Returns true or false, true if the child is not there and those nodes can be ignored.
+                if (start[names[0]] === null && start[names[1]] === null) {
+                    return start !== child
+
+                } else if (start[names[0]] === null) {
+                    return start !== child && prune(start[names[1]], child)
+
+                } else if (start[names[1]] === null) {
+                    return start !== child && prune(start[names[0]], child)
+
+                } else {
+                    return start !== child && prune(start[names[0]], child) && prune(start[names[1]], child)
+                }
+
+            }
+            let names = ['lower', 'higher'];
+
+            function recursionSearch(root, child_1, child_2) {
+                if(prune(root[names[0]], child_1) === true && prune(root[names[1]], child_2) === true){
+                    return root
+
+                } else if (prune(root[names[0]], child_1) === false && prune(root[names[1]], child_2) === false) {
+                    return root
+
+                } else if(root === child_1 || root === child_2) {
+                    return root
+                
+                } else if (prune(root[names[0]], child_1) === true) {
+                    return recursionSearch(root[names[1]])
+
+                } else if (prune(root[names[1]], child_1 === true)) {
+                    return recursionSearch(root[names[0]])
+                }
+            }
+
+            return recursionSearch(root, child_1, child_2)
+        }
+
+
+        let arr = randomArrOfNumbers(40);
+        console.log(arr);
+
+        let check = ShallowSearchTree(arr);
+
+        let go1 = check.higher;
+        let go2 = check.lower;
+
+        console.log(go1, go2);
+        console.log(commonAnsestor(check, go1, go2), 'answer:', check);
+
+        
+
+
+
+        
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        </script>
+
+    </head>
+    <body>
+
+    </body>
+</html>
