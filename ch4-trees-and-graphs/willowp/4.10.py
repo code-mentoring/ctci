@@ -1,8 +1,8 @@
 class BinaryTree:
-  def __init__(self, val):
+  def __init__(self, val, left=None, right=None):
     self.val = val
-    self.left = None
-    self.right = None
+    self.left = left
+    self.right = right
 
 def subtree(a, b):
   if b is None:
@@ -22,24 +22,44 @@ def match(a, b):
     return match(a.left, b.left) and match(a.right, b.right)
   return False
 
-tree_a = BinaryTree(1)
-tree_b = BinaryTree(1)
-print(subtree(tree_a, tree_b) is True)
-tree_c = BinaryTree(2)
-print(subtree(tree_a, tree_c) is False)
-tree_a.left = tree_c
-print(subtree(tree_a, tree_c) is True)
-print(subtree(tree_a, tree_b) is False)
-tree_d = BinaryTree(2)
-print(subtree(tree_a, tree_d) is True)
-tree_c.right = tree_b
-print(subtree(tree_a, tree_c) is True)
-big_root = BinaryTree(1)
-big_root.left = BinaryTree(2)
-big_root.right = BinaryTree(100)
-big_root.left.right = BinaryTree(3)
-big_root.right.left = BinaryTree(200)
-big_root.right.right = BinaryTree(200)
-big_root.left.left = BinaryTree(4)
+big = BinaryTree(1,
+  BinaryTree(2,
+    BinaryTree(3),
+    BinaryTree(3)),
+  BinaryTree(5,
+    BinaryTree(4),
+    BinaryTree(9))
+  )
+small = BinaryTree(2,
+    BinaryTree(3),
+    BinaryTree(3))
 
-print(subtree(big_root, big_root.right) is True)
+print(subtree(big, small) is True)
+
+big2 = BinaryTree(1,
+  BinaryTree(2,
+    BinaryTree(3),
+    BinaryTree(3)),
+  BinaryTree(5,
+    BinaryTree(4),
+    BinaryTree(9))
+  )
+small2 = BinaryTree(3,
+    BinaryTree(3),
+    BinaryTree(2))
+
+print(subtree(big2, small2) is False)
+
+big3 = BinaryTree(1,
+  BinaryTree(2,
+    BinaryTree(3),
+    BinaryTree(3, BinaryTree(5))),
+  BinaryTree(5,
+    BinaryTree(4),
+    BinaryTree(9))
+  )
+small3 = BinaryTree(2,
+    BinaryTree(3),
+    BinaryTree(3))
+
+print(subtree(big3, small3) is False)
