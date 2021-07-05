@@ -1,6 +1,6 @@
 Crack The Coding Interview Discussion
 
-We will discuss specific solutions to "Crack the Coding Interview" questions.
+We will discuss specific solutions to [Crack the Coding Interview](https://www.crackingthecodinginterview.com/) questions.
 Please attempt each problem before coming (pick any language you want). 
 
 Upload your solutions by: 
