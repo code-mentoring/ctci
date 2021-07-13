@@ -23,3 +23,15 @@ EXAMPLE
 Input:
 1775
 ( or: 11011101111)
+
+5.4
+Next Number: Given a positive integer, print the next smallers and the next largest number that have the same number of 1 bits in their binary representation.
+
+5.5
+Debugger: Explain what the following code does: `((n & (n-1)) == 0)`.
+
+5.6
+Conversion: Write a function to determine the number of bits you would need to flip to convert integer A to integer B.
+EXAMPLE
+Input: 29 (or: 1101), 15 (or: 01111)
+Output: 2
