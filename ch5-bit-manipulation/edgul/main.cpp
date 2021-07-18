@@ -7,7 +7,7 @@ struct MinAndMax
 {
     int min = 0;
     int max = 0;
-    bool valid = false;
+    bool valid() { return min && max; }
 };
 
 int countBits(unsigned short x)
@@ -47,8 +47,6 @@ MinAndMax nextSmallestAndLargest(unsigned short x)
             break;
         }
     }
-
-    result.valid = result.min != 0 && result.max != 0;
     return result;
 }
 

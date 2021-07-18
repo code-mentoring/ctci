@@ -35,3 +35,15 @@ Conversion: Write a function to determine the number of bits you would need to f
 EXAMPLE
 Input: 29 (or: 1101), 15 (or: 01111)
 Output: 2
+
+5.7
+PairwiseSwap: Write a program to swap odd and even bits in an integer with as few instructions as
+possible (e.g., bit 9 and bit 1 are swapped, bit 2 and bit 3 are swapped, and so on).
+
+5.8 
+Draw Line: A monochrome screen is stored as a single array of bytes, allowing eight consecutive
+pixels to be stored in one byte. The screen has width w, where w is divisible by 8 (that is, no byte will
+be split across rows). The height of the screen, of course, can be derived from the length of the array
+and the width. Implement a function that draws a horizontal line from ( xl, y) to ( x2 , y).
+The method signature should look something like:
+drawl ine(byte[] screen, int width, int xl , int X2, int y)
