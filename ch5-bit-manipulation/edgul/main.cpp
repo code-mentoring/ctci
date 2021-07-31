@@ -2,6 +2,10 @@
 #include <iostream>
 #include <bitset>
 #include <climits>
+#include <assert.h>
+#include <cstddef>
+#include <vector>
+
 
 struct MinAndMax
 {
@@ -100,10 +104,108 @@ void testNumBitsToFlip()
               << " " << numBitsToFlip(x, y) << std::endl; 
 }
 
+unsigned short evenMask()
+{
+    return 0xAAAA;
+}
+
+unsigned short oddMask()
+{
+    return 0x5555;
+}
+
+// 5.7
+unsigned short pairwiseSwap(unsigned short x)
+{
+    unsigned short left =  (x << 1) & evenMask();
+    unsigned short right = (x >> 1) & oddMask();
+    return left | right;
+}
+
+void testPairwiseSwap()
+{
+    assert(pairwiseSwap(1) == 2);
+    assert(pairwiseSwap(2) == 1);
+    assert(pairwiseSwap(8) == 4);
+    assert(pairwiseSwap(4) == 8);
+    assert(pairwiseSwap(0x8000) == 0x4000);
+    assert(pairwiseSwap(0xC000) == 0xC000);
+    assert(pairwiseSwap(0xF000) == 0xF000);
+    assert(pairwiseSwap(0xA000) == 0x5000);
+    assert(pairwiseSwap(0x00A0) == 0x0050);
+}
+
+class Screen
+{
+public:
+    Screen(int width, int height) : width_(width)
+    { 
+        assert(width_ % 8 == 0);
+        bits = std::vector<bool>(width_*height);
+    }
+
+    int width() { return width_; }
+    int height() { return bits.size()/(width_); }
+    void print() 
+    {
+        int soFar = 0;
+        for (bool i : bits)
+        {
+            std::cout << i;
+            soFar++;
+            if (soFar % width_ == 0)
+            {
+                std::cout << "\n";
+            }
+        }
+    }
+
+    // 5.8 -- draws a horizontal line on the screen
+    void drawLine(unsigned int x1, unsigned int x2, unsigned int y)
+    {
+        assert(x1 >= 0 && x1 < width_);
+        assert(x2 >= 0 && x2 < width_);
+        assert(y  >= 0 && y  < height());
+
+        unsigned char minX = std::min(x1, x2);     
+        unsigned char maxX = std::max(x1, x2);
+       
+        unsigned int start = y * width_ + minX;
+        unsigned int end = start + (maxX - minX);
+
+        for (int i = start; i <= end; i++)
+        {
+            bits[i] = 1;
+        }
+    }
+
+private:
+    std::vector<bool> bits;
+    int width_;
+}; 
+
+void testDrawLine()
+{
+
+    Screen s(24,24);
+    s.drawLine(0, 0, 0); // top-left corner
+    s.drawLine(23,23,23); // bottom-right corner
+
+    // draw a box
+    s.drawLine(10, 20, 7);
+    s.drawLine(10, 20, 9);
+    s.drawLine(10, 10, 8);
+    s.drawLine(20, 20, 8);
+
+    s.print();
+}
+
 int main(int argc, char * argv[])
 {
-    testNextSmallestAndLargest();
+    // testNextSmallestAndLargest();
     // testUnknownFunction();
     // testNumBitsToFlip();
+    // testPairwiseSwap(); // 5.7
+    testDrawLine();
     return 0;
 }
