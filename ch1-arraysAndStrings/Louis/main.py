@@ -1,4 +1,4 @@
-
+#exercise session 1
 def isUnique(s):
 
     check = []
