@@ -42,11 +42,5 @@ def palindrome_permutation(s):
         return False
 
 
-
-
-
-
 if __name__ == "__main__":
-    a = 'Tact Coa'
-
-    print(palindrome_permutation(a))
+    pass
