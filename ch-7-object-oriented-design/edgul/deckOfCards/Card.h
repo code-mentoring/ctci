@@ -3,23 +3,10 @@
 #include <vector>
 
 enum class Suit { SPADE, CLUB, HEART, DIAMOND };
-std::vector<Suit> allSuits()
-{
-    return { Suit::SPADE, Suit::CLUB, Suit::HEART, Suit::DIAMOND };
-}
 enum class Face { ACE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING };
-std::vector<Face> allFaces()
-{
-    return { Face::ACE, 
-             Face::TWO, 
-             Face::THREE, 
-             Face::FOUR, 
-             Face::FIVE, 
-             Face::SIX, 
-             Face::SEVEN, 
-             Face::EIGHT, 
-             Face::NINE, Face::TEN, Face::JACK, Face::QUEEN, Face::KING }; 
-}
+
+std::vector<Suit> allSuits();
+std::vector<Face> allFaces();
 
 using stringPair = std::pair<std::string,std::string>;
 
