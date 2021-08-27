@@ -4,35 +4,21 @@
 class CallHandler
 {
 public:
+    CallHandler(const CallLevel &level) : level_(level), busy_(false) {}
     bool busy() const { return busy_; }
+    const CallLevel & callLevel() const { return level_; }
+    bool process(const Call &call)
+    {
+       if (static_cast<int>(call.level()) > static_cast<int>(level_))
+       {
+           // not authorized to handle call 
+           return false;
+       }
+       call.process();
+       return true;
+    }
 protected:
     CallLevel level_;    
     bool busy_;
 };
 
-class Responder : public CallHandler
-{
-    Responder() 
-    { 
-        level_ = CallLevel::LOW;
-        busy_ = false;
-    }
-};
-
-class Manager : public CallHandler
-{
-    Manager() 
-    { 
-        level_ = CallLevel::MEDIUM; 
-        busy_ = false;
-    }
-};
-
-class Director : public CallHandler
-{
-    Director() 
-    { 
-        level_ = CallLevel::HIGH; 
-        busy_ = false;
-    }
-};
