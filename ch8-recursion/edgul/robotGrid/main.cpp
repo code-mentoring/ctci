@@ -47,13 +47,23 @@ std::vector<Dir> explore(const Pt &robot, const Grid &grid, std::vector<Dir> dir
     }
     if (!grid.isBlocked(robot.down())) 
     {
-       dirs.push_back(Dir::DOWN);
-       return explore(robot.down(), grid, dirs);
+        std::vector<Dir> temp = dirs;
+        temp.push_back(Dir::DOWN);
+        temp = explore(robot.down(), grid, temp);
+        if (!temp.empty())
+        {
+            return temp;
+        }
     }
     if (!grid.isBlocked(robot.right())) 
     {
-       dirs.push_back(Dir::RIGHT);
-       return explore(robot.right(), grid, dirs);
+        std::vector<Dir> temp = dirs;
+        temp.push_back(Dir::RIGHT);
+        temp = explore(robot.right(), grid, temp);
+        if (!temp.empty())
+        {
+            return temp;
+        }
     }
   
     // return the empty vector if neither direction is possible from current location
@@ -64,7 +74,9 @@ int main(int argc, char **argv)
 {
     Pt robot{0,0};
     Grid grid(5,5);
-    grid.addBlock({2,2});
+    grid.addBlock({3,3});
+    grid.addBlock({3,4});
+    grid.addBlock({3,5});
     grid.addBlock({0,1});
     grid.addBlock({1,1});
   
