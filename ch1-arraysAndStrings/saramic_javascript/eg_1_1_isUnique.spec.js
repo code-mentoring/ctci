@@ -7,4 +7,16 @@ describe("IsUnique", () => {
   it("empty string has unique characters", () => {
     expect(isUnique("")).toBeTruthy();
   });
+
+  it("alphabetical string has unique characters", () => {
+    expect(isUnique("abc")).toBeTruthy();
+  });
+
+  it("duplicate character does NOT have unique characters", () => {
+    expect(isUnique("aabc")).toBeFalsy();
+  });
+
+  it("mixed case alphabetical string has unique characters", () => {
+    expect(isUnique("aAbBcC")).toBeTruthy();
+  });
 });
