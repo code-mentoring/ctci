@@ -1,6 +1,7 @@
 const isUnique = function (inputString) {
-  const charSet = new Set(inputString.split(""));
-  return inputString.length === charSet.size;
+  const inputChars = [...inputString]; // NOTE: spread on multi-byte characters
+  const charSet = new Set(inputChars);
+  return inputChars.length === charSet.size;
 };
 
 module.exports = { isUnique };
