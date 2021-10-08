@@ -25,3 +25,17 @@ const { checkPermutation } = require("./eg_1_2_checkPermutation");
 ].forEach((input) =>
   logInputOutput("checkPermutation", input, checkPermutation(...input))
 );
+
+console.log("\nSession 1.4 - palindromePermutation");
+const { palindromePermutation } = require("./eg_1_4_palindromePermutation");
+[
+  "code",
+  "aab",
+  "carerac",
+  "Borrow or rob",
+  123454321,
+  "!@#$%^&*()",
+  null,
+].forEach((input) =>
+  logInputOutput("palindromePermutation", input, palindromePermutation(input))
+);
