@@ -1,16 +1,27 @@
 console.log("Session 1.1 - isUnique");
 const { isUnique } = require("./eg_1_1_isUnique");
-const logIsUnique = (input) => {
+const logInputOutput = (functionName, input, output) => {
+  const inputString = JSON.stringify(input);
   console.log(
     "input: ",
-    JSON.stringify(input).padEnd(10 - input.split().length, " "),
-    " isUnique: ",
-    isUnique(input)
+    inputString.padEnd(20 - inputString.split().length, " "),
+    ` ${functionName}: `,
+    output
   );
 };
-logIsUnique("");
-logIsUnique("abc");
-logIsUnique("aabc");
-logIsUnique("\t\t");
-logIsUnique("😀😀");
-logIsUnique("😀🙁");
+["", "abc", "aabc", "\t\t", "😀😀", "😀🙁"].forEach((input) =>
+  logInputOutput("isUnique", input, isUnique(input))
+);
+
+console.log("\nSession 1.2 - checkPermutation");
+const { checkPermutation } = require("./eg_1_2_checkPermutation");
+[
+  ["asdf", "fdsa"],
+  ["sarah", "michael"],
+  ["god", "dog"],
+  [1234, 4321],
+  [null, null],
+  [null, undefined], // NOTE: undefined is rendered as null by JSON.stringify in logInputOutput
+].forEach((input) =>
+  logInputOutput("checkPermutation", input, checkPermutation(...input))
+);
