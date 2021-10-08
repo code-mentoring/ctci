@@ -6,7 +6,7 @@ const logInputOutput = (functionName, input, output) => {
     "input: ",
     inputString.padEnd(20 - inputString.split().length, " "),
     ` ${functionName}: `,
-    output
+    JSON.stringify(output)
   );
 };
 ["", "abc", "aabc", "\t\t", "😀😀", "😀🙁"].forEach((input) =>
@@ -38,4 +38,10 @@ const { palindromePermutation } = require("./eg_1_4_palindromePermutation");
   null,
 ].forEach((input) =>
   logInputOutput("palindromePermutation", input, palindromePermutation(input))
+);
+
+console.log("\nSession 1.6 - stringCompression");
+const { stringCompression } = require("./eg_1_6_stringCompression");
+["aabcccccaaa", "aabbcc", "aaaaaaaaaaaaaaa"].forEach((input) =>
+  logInputOutput("stringCompression", input, stringCompression(input))
 );
