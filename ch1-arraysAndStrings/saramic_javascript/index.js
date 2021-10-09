@@ -45,3 +45,30 @@ const { stringCompression } = require("./eg_1_6_stringCompression");
 ["aabcccccaaa", "aabbcc", "aaaaaaaaaaaaaaa"].forEach((input) =>
   logInputOutput("stringCompression", input, stringCompression(input))
 );
+
+console.log("\nSession 1.7 - rotateMatrix");
+const { rotateMatrix } = require("./eg_1_7_rotateMatrix");
+const logMatrix = (matrix) =>
+  `[\n${matrix.map((row) => `  ${row}`).join("\n")}\n]`;
+const logInputOutputMatrix = (input, output) => {
+  console.log(
+    "input: ",
+    logMatrix(input),
+    "\noutput: ",
+    logMatrix(output),
+    "\n"
+  );
+};
+
+let matrix = [
+  [1, 2, 3],
+  [4, 5, 6],
+  [7, 8, 9],
+];
+logInputOutputMatrix(matrix, rotateMatrix(matrix));
+
+matrix = [
+  [1, 2, 3],
+  [4, 5, 6],
+];
+logInputOutputMatrix(matrix, rotateMatrix(matrix));
