@@ -12,5 +12,3 @@ def _stairs(n, memo):
 		return memo[n]
 	memo[n] = _stairs(n-1, memo) + _stairs(n-2, memo) + _stairs(n-3, memo)
 	return memo[n]
-
-print(stairs(55))
