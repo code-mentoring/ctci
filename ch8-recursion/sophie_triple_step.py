@@ -8,6 +8,7 @@ def main():
     def get_total_steps_from_user():
         return input("Enter number of steps: ")
 
+    # Assumption: The total number of hops must = the total number of stairs
     def update_count(count):
         if count == 0:
             nonlocal count_ways
