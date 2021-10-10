@@ -1,6 +1,7 @@
 const {
   tripleSet,
   robotPath,
+  basicMagicIndex,
   magicIndex,
   powerSet,
 } = require("./ch8Recursion");
@@ -28,18 +29,24 @@ describe("robotPath", () => {});
 // FOLLOW UP: What if the values are not distinct?
 describe("magicIndex", () => {
   it("returns undefined if there is no magic index", () => {
-    expect(magicIndex([1, 2, 3, 4, 5])).toEqual(undefined);
+    let input = [1, 2, 3, 4, 5];
+    expect(basicMagicIndex(input)).toEqual(undefined);
+    expect(magicIndex()).toEqual(undefined);
   });
 
   it("returns the magic index", () => {
-    expect(magicIndex([-200, -100, 2, 300, 400])).toEqual(2);
+    let input = [-200, -100, 2, 300, 400];
+    expect(basicMagicIndex(input)).toEqual(2);
+    expect(magicIndex(input)).toEqual(2);
   });
 
   it("returns one of the magic indices", () => {
-    expect(magicIndex([-200, -100, 2, 3, 400]).toString()).toMatch(/^(2|3)$/);
+    let input = [-200, -100, 2, 3, 400];
+    expect(basicMagicIndex(input).toString()).toMatch(/^(2|3)$/);
+    expect(magicIndex(input).toString()).toMatch(/^(2|3)$/);
   });
 
-  xit("find the magic index in log n time", () => {
+  describe("a large enough input array", () => {
     const elementIndex = 10000;
     const input = [
       ...Array(elementIndex)
@@ -48,9 +55,19 @@ describe("magicIndex", () => {
       elementIndex,
       ...Array(10000000)
         .fill(0)
-        .map((e, i) => elementIndex + i),
+        .map((e, i) => elementIndex + 2 + i),
     ];
-    expect(magicIndex(input, { tick: true })).toEqual([elementIndex, 100]);
+
+    it("find the magic index in FAST O(log(n)) time (21 ticks)", () => {
+      expect(magicIndex(input, { tick: true })).toEqual([elementIndex, 21]);
+    });
+
+    it("find the magic index in SLOW O(n) time (10,0001 ticks)", () => {
+      expect(basicMagicIndex(input, { tick: true })).toEqual([
+        elementIndex,
+        10001,
+      ]);
+    });
   });
 });
 

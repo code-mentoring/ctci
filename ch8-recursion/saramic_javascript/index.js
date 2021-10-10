@@ -1,6 +1,7 @@
 const {
   tripleSet,
   robotPath,
+  basicMagicIndex,
   magicIndex,
   powerSet,
 } = require("./ch8Recursion");
@@ -30,7 +31,12 @@ logInputOutput(magicIndex, input);
 input = [-1, 0, 1, 2, 3, 4, 5, 6, 7, 9, 11];
 logInputOutput(magicIndex, input);
 console.log(
-  "Performed in: ",
+  "                   BASIC Performed in:",
+  basicMagicIndex(input, { tick: true })[1],
+  " iterations"
+);
+console.log(
+  "               RECURSIVE Performed in: ",
   magicIndex(input, { tick: true })[1],
   " iterations"
 );
