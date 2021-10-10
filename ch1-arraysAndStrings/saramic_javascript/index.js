@@ -91,3 +91,15 @@ matrix = [
 ];
 console.log(logMatrix(matrix));
 console.log(logMatrix(rotateMatrixInplace(matrix)));
+
+console.log("\nSession 1.8 - zeroMatrix");
+const { zeroMatrix } = require("./eg_1_8_zeroMatrix");
+matrix = [
+  [1, 1, 1, 1, 1],
+  [1, 0, 1, 1, 1],
+  [1, 1, 1, 1, 1],
+  [1, 0, 1, 0, 1],
+  [1, 1, 1, 1, 1],
+];
+console.log(logMatrix(matrix));
+console.log(logMatrix(zeroMatrix(matrix)));
