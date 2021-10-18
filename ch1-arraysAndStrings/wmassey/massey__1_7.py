@@ -9,14 +9,4 @@ Objective:
 """
 
 
-def is_uniqe(s: str) -> bool:
-    return (len(set(s))) == len(s)
-
-
-def main():
-    print(is_uniqe('hello'))
-    print(is_uniqe('bird'))    
-    
-
-if __name__ == '__main__':
-    main()
+# Come back to this...
