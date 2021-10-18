@@ -10,6 +10,8 @@ Upload your solutions by:
     2. Add your source files to the chapter folder
         ch#-SomeChapter/yourName_yourFile.ext
     3. Submit pull request
+    
+[[How to] GitHub Forking and Pull Requests](https://gist.github.com/Chaser324/ce0505fbed06b947d962)
 
 You might need to keep your forked repo up to date with the code-mentoring repo as it moves along.
 It's good practice anyway when working on forked repos.
@@ -24,5 +26,3 @@ It's good practice anyway when working on forked repos.
   * git merge upstream/master
 * Then update your remote fork:
   * git push
-
-[More info about GitHub Forking](https://gist.github.com/Chaser324/ce0505fbed06b947d962)
