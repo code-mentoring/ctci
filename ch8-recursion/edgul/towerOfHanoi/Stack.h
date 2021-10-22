@@ -50,16 +50,19 @@ public:
         return count;
     }
 
+    void printHelper(Node<T> *node){
+       if (node->next) printHelper(node->next);
+       std::cout << node->value << " ";
+    }
+    
     void print()
     {
         std::cout << "[ ";
-        Node<T> *i = head_;
-        while (i) {
-            std::cout << i->value << " ";
-            i = i->next;
-        }
+        if (head_) printHelper(head_);
         std::cout << "]" << std::endl;
     }
+
+
 private:
     Node<T> *head_;
 };

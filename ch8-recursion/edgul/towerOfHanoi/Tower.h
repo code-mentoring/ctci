@@ -53,5 +53,20 @@ public:
         std::cout << std::endl;
     }
 
+    static Pole otherPole(Pole p1, Pole p2) {
+        assert(p1 != p2);
+        if (p1 == Pole::LEFT) {
+            if (p2 == Pole::RIGHT) return Pole::MID; 
+            return Pole::RIGHT;
+        }
+        else if (p1 == Pole::MID){
+            if (p2 == Pole::LEFT) return Pole::RIGHT;
+            return Pole::LEFT;
+        }
+        else { // Pole::RIGHT
+            if (p2 == Pole::LEFT) return Pole::MID;
+            return Pole::LEFT;
+        }
+    }
     std::unordered_map<Pole, stack_ptr> rings;
 };
