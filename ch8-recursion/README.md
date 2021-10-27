@@ -29,3 +29,9 @@ In  the classic  problem of the Towers  of Hanoi, you  have 3 towers and  N disk
 
 Write a program to move the disks from the first tower to the last using stacks.
 https://en.wikipedia.org/wiki/Tower_of_Hanoi
+
+## 8.7 Permutations without Dups
+Write a mehtod to compute all permutations of a string of unique characters
+
+## 8.7 Permutations without Dups
+Write a method to compute all permutations of a string whose characters are not necessarily unique. The list of permutations should not have duplicates.
